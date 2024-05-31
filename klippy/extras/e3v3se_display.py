@@ -437,8 +437,6 @@ class E3v3seDisplay:
         # register for key events
         menu_keys.MenuKeys(config, self.key_event)
 
-        bridge = config.get('serial_bridge')
-
         self.serial_bridge = self.printer.lookup_object(
             'serial_bridge USART2')
         self.serial_bridge.register_callback(

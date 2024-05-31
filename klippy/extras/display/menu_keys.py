@@ -16,7 +16,7 @@ class MenuKeys:
         self.callback = callback
         buttons = self.printer.load_object(config, "buttons")
         # Register rotary encoder
-        encoder_pins = config.get('encoder_pins', None)
+        encoder_pins = config.get('^PA12, ^PA11', None)
         encoder_steps_per_detent = config.getchoice('encoder_steps_per_detent',
                                                     {2: 2, 4: 4}, 4)
         if encoder_pins is not None:
@@ -37,15 +37,13 @@ class MenuKeys:
         self.click_timer = self.reactor.register_timer(self.long_click_event)
         self.register_button(config, 'click_pin', self.click_callback, False)
         # Register other buttons
-        self.register_button(config, 'back_pin', self.back_callback)
-        self.register_button(config, 'up_pin', self.up_callback)
-        self.register_button(config, 'down_pin', self.down_callback)
-        self.register_button(config, 'kill_pin', self.kill_callback)
+        # self.register_button(config, 'back_pin', self.back_callback)
+        # self.register_button(config, 'up_pin', self.up_callback)
+        # self.register_button(config, 'down_pin', self.down_callback)
+        # self.register_button(config, 'kill_pin', self.kill_callback)
 
     def register_button(self, config, name, callback, push_only=True):
         pin = config.get(name, None)
-        if pin is None:
-            return
         buttons = self.printer.lookup_object("buttons")
         if config.get('analog_range_' + name, None) is None:
             if push_only:
