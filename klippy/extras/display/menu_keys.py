@@ -16,7 +16,7 @@ class MenuKeys:
         self.callback = callback
         buttons = self.printer.load_object(config, "buttons")
         # Register rotary encoder
-        encoder_pins = config.get('^PA12, ^PA11', None)
+        encoder_pins = '^PA12, ^PA11'
         encoder_steps_per_detent = config.getchoice('encoder_steps_per_detent',
                                                     {2: 2, 4: 4}, 4)
         if encoder_pins is not None:
