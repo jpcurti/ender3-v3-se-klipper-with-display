@@ -2774,6 +2774,7 @@ class E3v3seDisplay:
         self.Clear_Main_Window()
 
     def Draw_PrintPreview(self, file):
+        self.Clear_Menu_Area()
         # Get the Gcode thumbnail and draw it
         thumbnail = self.pd.getThumbnail(file)
         if thumbnail:

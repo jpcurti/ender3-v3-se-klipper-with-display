@@ -277,7 +277,7 @@ class PrinterData:
         self.subdirPath = '/'.join(path)
 
     def getThumbnail(self, filename):
-        sdcard = self.printer.lookup_object('virtual-sdcard')
+        sdcard = self.printer.lookup_object('virtual_sdcard')
         fileDir = os.path.join(sdcard.sdcard_dirname, filename)
 
         with open(fileDir, 'r') as file:
