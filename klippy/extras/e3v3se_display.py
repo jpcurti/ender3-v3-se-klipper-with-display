@@ -209,6 +209,7 @@ class E3v3seDisplay:
     Step = 19
     Step_value = 20
     FeatureNotAvailable = 21
+    PrintPreview = 22
 
     # Last Process ID
     Last_Prepare = 21
@@ -731,19 +732,11 @@ class E3v3seDisplay:
                     self.Redraw_SD_List()
             else:
                 if self.pd.selectFile(self.select_file.now - 1):
-                    # Reset highlight for next entry
 
-                    # // Start choice and print SD file
-                    self.pd.HMI_flag.heat_flag = True
-                    self.pd.HMI_flag.print_finish = False
-                    self.pd.HMI_ValueStruct.show_mode = 0
+                    # Draw the print preview screen
+                    self.Draw_PrintPreview(self.pd.fl[self.select_file.now - 1])
+                    self.checkkey = self.PrintPreview
 
-                    self.pd.openAndPrintFile(self.pd.fl[self.select_file.now - 1])
-
-                    self.select_print.reset()
-                    self.select_file.reset()
-                    
-                    self.Goto_PrintProcess()
                 else:
                     self.Redraw_SD_List()
 
@@ -975,6 +968,7 @@ class E3v3seDisplay:
                 self.select_page.set(3)
                 self.Goto_MainMenu()
 
+
     def HMI_Printing(self):
         encoder_state = self.get_encoder_state()
         if encoder_state == self.ENCODER_DIFF_NO:
@@ -1064,6 +1058,33 @@ class E3v3seDisplay:
                     self.Goto_MainMenu()
                 else:
                     self.Goto_PrintProcess()  # cancel stop
+
+    def HMI_PrintPreview(self):
+        encoder_state = self.get_encoder_state()
+        if encoder_state == self.ENCODER_DIFF_NO:
+            return
+        if encoder_state == self.ENCODER_DIFF_CW:
+            self.select_cancel.set(1)
+            self.select_confirm.reset()
+            self.Draw_Confirm_Cancel_Buttons(height=12)
+        elif encoder_state == self.ENCODER_DIFF_CCW:
+            self.select_confirm.set(1)
+            self.select_cancel.reset()
+            self.Draw_Confirm_Cancel_Buttons(height=12)
+        elif encoder_state == self.ENCODER_DIFF_ENTER:
+            if self.select_confirm.now == 1:
+                # Start printing the file
+                self.pd.HMI_flag.heat_flag = True
+                self.pd.HMI_flag.print_finish = False
+                self.pd.HMI_ValueStruct.show_mode = 0
+
+                self.pd.openAndPrintFile(self.pd.fl(self.select_file.now - 1))
+
+                self.select_file.reset()
+                self.select_print.reset()
+            elif self.select_cancel.now == 1:
+                self.Clear_Main_Window()
+                self.Redraw_SD_List()
 
     # Tune  */
     def HMI_Tune(self):
@@ -2540,7 +2561,7 @@ class E3v3seDisplay:
         else:
             self.Draw_Menu_Line(row, self.icon_file, fl)
 
-    def Draw_Confirm_Cancel_Buttons(self):
+    def Draw_Confirm_Cancel_Buttons(self, height=152):
         if self.select_confirm.now == 1:
             c1 = self.color_white
             c2 = self.color_popup_background
@@ -2550,21 +2571,21 @@ class E3v3seDisplay:
         else:
             c1 = self.color_popup_background
             c2 = self.color_popup_background
-        self.lcd.draw_rectangle(1, c1, 28, 152, 113, 187)
-        self.lcd.draw_rectangle(1, c2, 128, 152, 213, 187)
+        self.lcd.draw_rectangle(1, c1, 28, height, 113, height + 35)
+        self.lcd.draw_rectangle(1, c2, 128, height, 213, height = 35)
         self.lcd.draw_icon(
             True,
             self.selected_language,
             self.icon_confirm_button,
             30,
-            self.HEADER_HEIGHT + 130,
+            height + 2,
         )
         self.lcd.draw_icon(
             True,
             self.selected_language,
             self.icon_cancel_button,
             130,
-            self.HEADER_HEIGHT + 130,
+            height + 2,
         )
 
     def Draw_Printing_Screen(self):
@@ -2752,6 +2773,18 @@ class E3v3seDisplay:
 
     def Draw_Leveling_Menu(self):
         self.Clear_Main_Window()
+
+
+    def Draw_PrintPreview(self, file):
+        # Get the Gcode thumbnail and draw it
+        thumbnail = self.pd.getThumbnail(file)
+        if thumbnail:
+            self.lcd.draw_thumbnail(thumbnail)
+
+        self.select_cancel.set(1)
+        self.select_confirm.reset()
+        self.Draw_Confirm_Cancel_Buttons(12)
+
 
     def Draw_Info_Menu(self):
         """
@@ -3797,6 +3830,8 @@ class E3v3seDisplay:
             self.HMI_StepXYZE()
         elif self.checkkey == self.FeatureNotAvailable:
             self.HMI_FeatureNotAvailable()
+        elif self.checkkey == self.PrintPreview:
+            self.HMI_PrintPreview()
 
         self.time_since_movement = 0
 
