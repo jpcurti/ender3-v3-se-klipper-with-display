@@ -1065,11 +1065,11 @@ class E3v3seDisplay:
         if encoder_state == self.ENCODER_DIFF_CW:
             self.select_cancel.set(1)
             self.select_confirm.reset()
-            self.Draw_Confirm_Cancel_Buttons(height=12)
+            self.Draw_Confirm_Cancel_Buttons(height=310)
         elif encoder_state == self.ENCODER_DIFF_CCW:
             self.select_confirm.set(1)
             self.select_cancel.reset()
-            self.Draw_Confirm_Cancel_Buttons(height=12)
+            self.Draw_Confirm_Cancel_Buttons(height=310)
         elif encoder_state == self.ENCODER_DIFF_ENTER:
             if self.select_confirm.now == 1:
                 # Start printing the file
@@ -2571,7 +2571,7 @@ class E3v3seDisplay:
             c1 = self.color_popup_background
             c2 = self.color_popup_background
         self.lcd.draw_rectangle(1, c1, 28, height, 113, height + 35)
-        self.lcd.draw_rectangle(1, c2, 128, height, 213, height = 35)
+        self.lcd.draw_rectangle(1, c2, 128, height, 213, height + 35)
         self.lcd.draw_icon(
             True,
             self.selected_language,
@@ -2775,10 +2775,10 @@ class E3v3seDisplay:
 
     def Draw_PrintPreview(self, file):
         self.Clear_Main_Window()
-        
+
         self.select_cancel.set(1)
         self.select_confirm.reset()
-        self.Draw_Confirm_Cancel_Buttons(12)
+        self.Draw_Confirm_Cancel_Buttons(310)
 
         # Get the Gcode thumbnail and draw it
         thumbnail = self.pd.getThumbnail(file)
