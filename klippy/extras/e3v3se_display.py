@@ -2774,15 +2774,17 @@ class E3v3seDisplay:
         self.Clear_Main_Window()
 
     def Draw_PrintPreview(self, file):
-        self.Clear_Menu_Area()
+        self.Clear_Main_Window()
+        
+        self.select_cancel.set(1)
+        self.select_confirm.reset()
+        self.Draw_Confirm_Cancel_Buttons(12)
+
         # Get the Gcode thumbnail and draw it
         thumbnail = self.pd.getThumbnail(file)
         if thumbnail:
             self.lcd.draw_thumbnail(thumbnail)
 
-        self.select_cancel.set(1)
-        self.select_confirm.reset()
-        self.Draw_Confirm_Cancel_Buttons(12)
 
     def Draw_Info_Menu(self):
         """

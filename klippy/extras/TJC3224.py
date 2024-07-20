@@ -651,7 +651,7 @@ class TJC3224_LCD:
         return rgb565
 
     def draw_thumbnail(self, data):
-        x, y = 0
+        x, y = 0, 0
         for row in data:
             for color in row:
                 if color[3] == 0:
