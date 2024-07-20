@@ -626,3 +626,40 @@ class TJC3224_LCD:
         self.word(x_end)
         self.word(y_end)
         self.send()
+
+    def rgb_to_rgb565(self, r, g, b):
+        """
+        Convert RGB values to RGB565 format and return as a single 16-bit integer.
+        
+        :param r: Red component (0-255)
+        :param g: Green component (0-255)
+        :param b: Blue component (0-255)
+        :return: 16-bit RGB565 value as an integer
+        """
+        # Clamp values to the range 0-255
+        r = min(max(r, 0), 255)
+        g = min(max(g, 0), 255)
+        b = min(max(b, 0), 255)
+
+        # Convert RGB to RGB565
+        r5 = (r >> 3) & 0x1F
+        g6 = (g >> 2) & 0x3F
+        b5 = (b >> 3) & 0x1F
+
+        rgb565 = (r5 << 11) | (g6 << 5) | b5
+
+        return rgb565
+
+    def draw_thumbnail(self, data):
+        x, y = 0
+        for row in data:
+            for color in row:
+                if color[3] == 0:
+                    continue
+            else:
+                color_565 = self.rgb_to_rgb565(color[0], color[1], color[2])
+                self.draw_point(color_565, x + 20, y + 20)
+            x += 1
+        y += 1
+        x = 0
+ 

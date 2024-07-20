@@ -3,7 +3,8 @@ Important: This file is imported from the DWIN_T5UIC1_LCD
 repository available on (https://github.com/odwdinc/DWIN_T5UIC1_LCD)
 with no to minimal changes. All credits go to the original author.
 """
-import logging
+import logging, os, io
+from PIL import Image
 
 
 class xyze_t:
@@ -274,6 +275,66 @@ class PrinterData:
         path = self.subdirPath.split('/')
         path.pop(-1)
         self.subdirPath = '/'.join(path)
+
+    def getThumbnail(self, filename):
+        sdcard = self.printer.lookup_object('virtual-sdcard')
+        fileDir = os.path.join(sdcard.sdcard_dirname, filename)
+
+        with open(fileDir, 'r') as file:
+            lines = file.readlines()
+
+        start_idx = None
+        end_idx = None
+        for idx, line in enumerate(lines):
+            if line.startswith("; thumbnail begin"):
+                start_idx = idx
+            elif line.startswith("; thumbnail end"):
+                end_idx = idx
+
+        if start_idx is None or end_idx is None:
+            return []
+
+        thumbnail_lines = lines[start_idx + 1:end_idx]
+        base64_thumbnail = ''
+        for line in thumbnail_lines:
+            base64_thumbnail += line.split(' ')[1].strip()
+
+        thumbnail_info = lines[start_idx].split(' ')
+        thumbnail_sise = '200x200'
+        if not thumbnail_info[3] == thumbnail_sise:
+            return []
+
+        # Decode thumbnail into bytes
+        base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+        base64_map = {char: index for index, char in enumerate(base64_chars)}
+        base64_str = base64_thumbnail.rstrip('=')
+
+        binary_str = ""
+        for char in base64_str:
+            binary_val = bin(base64_map[char])[2:].zfill(6)
+            binary_str += binary_val
+
+        image_data = bytearray()
+        for i in range(0, len(binary_str), 8):
+            byte = binary_str[i:i+8]
+            image_data.append(int(byte, 2))
+
+        # Convert byte data to an image
+        thumbnail = Image.open(io.BytesIO(image_data))
+
+        # Extract pixel colors
+        img = thumbnail.convert('RGBA')
+        width, height = img.size
+        hex_array = []
+
+        for y in range(height):
+            row = []
+            for x in range(width):
+                hex_value = img.getpixel((x, y))
+                row.append(hex_value)
+            hex_array.append(row)
+
+        return hex_array
 
     def update_variable(self):
         gcm = self.printer.lookup_object(
