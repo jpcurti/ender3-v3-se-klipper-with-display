@@ -208,6 +208,7 @@ class E3v3seDisplay:
     select_confirm = select_t()
     select_cancel = select_t()
     select_misc = select_t()
+    select_filament_swap = select_t()
 
     index_file = MROWS
     index_prepare = MROWS
@@ -242,6 +243,7 @@ class E3v3seDisplay:
     Step_value = 20
     FeatureNotAvailable = 21
     ManualProbeProcess = 22
+    FilamentSwapProcess = 23
 
     # Last Process ID
     Last_Prepare = 21
@@ -496,6 +498,7 @@ class E3v3seDisplay:
     # Color Palette
     color_white = 0xFFFF
     color_yellow = 0xFF0F
+    color_blue = 0x5C9F
     color_popup_background = 0x31E8  # Popup background color
     color_background_grey = 0x1145  # Dark grey background color
     color_background_black = 0x0841  # Black background color
@@ -571,6 +574,14 @@ class E3v3seDisplay:
         # Custom macro feature
         self.custom_macros = []
 
+        # M600 - Filament swap
+        self.filament_swap_target_hotend_temp = 0
+        self.gcode.register_command(
+            "SE_LCD_DISPLAY_SWAP_FILAMENT", 
+            self.cmd_SWAP_FILAMENT, 
+            desc="Displays a filament swap popup on the LCD"
+        )
+            
         # register for key events
         E3V3SEMenuKeys(config, self.key_event)
 
@@ -2233,6 +2244,25 @@ class E3v3seDisplay:
             self.MBASE(bed_line) - 8,
             self.pd.HMI_ValueStruct.Bed_Temp,
         )
+        
+    def HMI_FilamentSwap(self):
+        encoder_state = self.get_encoder_state()
+        if encoder_state == self.ENCODER_DIFF_NO:
+            return
+
+        if encoder_state == self.ENCODER_DIFF_ENTER:
+            if self.select_filament_swap.now() == 0: # Unload
+                self.gcode.run_script_from_command(f"UNLOAD_FILAMENT HOME=false EXTRUDER_TEMP={self.filament_swap_target_hotend_temp}")
+            elif self.select_filament_swap.now() == 1: # Load
+                self.gcode.run_script_from_command(f"LOAD_FILAMENT EXTRUDER_TEMP={self.filament_swap_target_hotend_temp}")
+            elif self.select_filament_swap.now() == 2: # Resume
+                self.gcode.run_script_from_command("RESUME")
+        else:
+            if encoder_state == self.ENCODER_DIFF_CW or encoder_state == self.ENCODER_DIFF_FAST_CW:
+                self.select_filament_swap.inc(3)
+            elif encoder_state == self.ENCODER_DIFF_CCW or encoder_state == self.ENCODER_DIFF_FAST_CCW:
+                self.select_filament_swap.dec()
+            self.Draw_FilamentSwap_Popup()
 
     # ---------------------Todo--------------------------------#
 
@@ -3393,7 +3423,7 @@ class E3v3seDisplay:
         )
 
     def Draw_Manual_Probe_Menu(self, draw_static_elements=False, draw_error=False):
-        if self.manual_probe == None or self.manual_probe.status["is_active"] == False:
+        if self.manual_probe is None or self.manual_probe.status["is_active"] == False:
             self.Goto_MainMenu()
             return
 
@@ -3753,6 +3783,121 @@ class E3v3seDisplay:
         )
         self.lcd.draw_rectangle(0, self.color_white, 80, 154, 160, 185)
 
+    def Draw_FilamentSwap_Popup(self):
+        """
+        Displays a popup window indicating that printing is paused for a filament swap.
+        """
+        # Draw "Filament swap" on header
+        self.lcd.draw_string_centered(
+            False,
+            self.lcd.font_8x8,
+            self.color_white,
+            self.color_background_black,
+            self.MENU_CHR_W,
+            self.MENU_CHR_W,
+            self.lcd.screen_width / 2,
+            self.HEADER_HEIGHT / 2,
+            "Filament swap"
+        )
+        
+        self.lcd.draw_string_centered(
+            False,
+            self.lcd.font_8x8,
+            self.color_white,
+            self.color_background_black,
+            self.MENU_CHR_W,
+            0,
+            self.lcd.screen_width / 2,
+            self.HEADER_HEIGHT + 15,
+            "Printer paused"
+        )
+        self.lcd.draw_string_centered(
+            False,
+            self.lcd.font_8x8,
+            self.color_white,
+            self.color_background_black,
+            self.MENU_CHR_W,
+            0,
+            self.lcd.screen_width / 2,
+            self.HEADER_HEIGHT + 15 + self.MENU_CHR_W + 15,
+            "Please select an option:"
+        )
+        
+        # Draw three buttons: "Load", "Unload", and "Resume Print"
+        padding = 15
+        button_height = self.MENU_CHR_W + padding * 3
+        button_width = 8 * self.MENU_CHR_W + padding * 2
+        button_x = self.lcd.screen_width / 2 - button_width / 2
+        button_start_y = self.lcd.screen_height - padding - button_height * 3
+        button_margin = 5
+        
+        # Button 1 - Load filament
+        button_y = button_start_y  
+        self.lcd.draw_rectangle(
+            1,# if self.select_filament_swap.now == 0 else 0,
+            self.color_blue if self.select_filament_swap.now == 0 else self.color_popup_background,
+            button_x,
+            button_y,
+            button_x + button_width,
+            button_y + button_height - button_margin
+        )
+        self.lcd.draw_string_centered(
+            False,
+            self.lcd.font_8x8,
+            self.color_white,
+            self.color_background_black,
+            self.MENU_CHR_W,
+            self.MENU_CHR_W,
+            self.lcd.screen_width / 2,
+            button_y + (button_height - button_margin) / 2,
+            "Load"
+        )
+        
+        # Button 2 - Unload filament
+        button_y += button_height
+        self.lcd.draw_rectangle(
+            1,# if self.select_filament_swap.now == 1 else 0,
+            self.color_blue if self.select_filament_swap.now == 1 else self.color_popup_background,
+            button_x,
+            button_y,
+            button_x + button_width,
+            button_y + button_height - button_margin
+        )
+        self.lcd.draw_string_centered(
+            False,
+            self.lcd.font_8x8,
+            self.color_white,
+            self.color_background_black,
+            self.MENU_CHR_W,
+            self.MENU_CHR_W,
+            self.lcd.screen_width / 2,
+            button_y + (button_height - button_margin) / 2,
+            "Unload"
+        )
+
+        # Button 3 - Resume print
+        button_y += button_height
+        self.lcd.draw_rectangle(
+            1,# if self.select_filament_swap.now == 2 else 0,
+            self.color_blue if self.select_filament_swap.now == 2 else self.color_popup_background,
+            button_x,
+            button_y,
+            button_x + button_width,
+            button_y + button_height - button_margin
+        )
+        self.lcd.draw_string_centered(
+            False,
+            self.lcd.font_8x8,
+            self.color_white,
+            self.color_background_black,
+            self.MENU_CHR_W,
+            self.MENU_CHR_W,
+            self.lcd.screen_width / 2,
+            button_y + (button_height - button_margin) / 2,
+            "Resume"
+        )
+        
+
     def Erase_Menu_Cursor(self, line):
         self.lcd.draw_rectangle(
             1,
@@ -4049,6 +4194,17 @@ class E3v3seDisplay:
         )
 
     # --------------------------------------------------------------#
+    # --------------------------------------------------------------# 
+    
+    def cmd_SWAP_FILAMENT(self, gcmd):
+        self.checkkey = self.FilamentSwapProcess
+        self.filament_swap_target_hotend_temp = gcmd.get_int("EXTRUDER_TEMP", 220)
+        self.log("Filament swap target hotend temp: %d" % self.filament_swap_target_hotend_temp)
+        self.Clear_Screen()
+        self.select_filament_swap.reset()
+        self.Draw_FilamentSwap_Popup()
+    
+    # --------------------------------------------------------------#
     # --------------------------------------------------------------#
 
     def EachMomentUpdate(self, eventtime):
@@ -4108,7 +4264,7 @@ class E3v3seDisplay:
             if self.pd.ishomed():
                 self.CompletedHoming()
 
-        if update and self.checkkey != self.MainMenu:
+        if update and (self.checkkey != self.MainMenu and self.checkkey != self.FilamentSwapProcess):
             self.Draw_Status_Area(update)
 
         self.time_since_movement += 1
@@ -4188,7 +4344,9 @@ class E3v3seDisplay:
             self.HMI_ManualProbe()
         elif self.checkkey == self.Misc:
             self.HMI_Misc()
-
+        elif self.checkkey == self.FilamentSwapProcess:
+            self.HMI_FilamentSwap()
+            
         self.time_since_movement = 0
 
     def log(self, msg, *args, **kwargs):
