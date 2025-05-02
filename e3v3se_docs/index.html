@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+<body>
+  <div id="app"></div>
+  <script>
+    // https://github.com/sreio/docsify-edit-on-github/blob/master/index.js
+    ;(function(win) {
+        function isFunction(functionToCheck) {
+         return functionToCheck && {}.toString.call(functionToCheck) === '[object Function]'
+        }
+      
+        win.EditOnGithubPlugin = {}
+      
+        function create(docBase, docEditBase, title) {
+          title = title || 'Edit on GitHub'
+          docEditBase = docEditBase || docBase.replace(/\/blob\//, '/edit/')
+      
+          function editDoc(event, vm) {
+            var docName = vm.route.file
+      
+            if (docName) {
+              var editLink = docEditBase + docName
+              window.open(editLink)
+              event.preventDefault()
+              return false
+            } else {
+              return true
+            }
+          }
+      
+          win.EditOnGithubPlugin.editDoc = editDoc
+      
+          function generateHeader(title) {
+            return header = [
+              '<div style="overflow: auto">',
+              '<p><a style="text-decoration: underline; cursor: pointer"',
+              'onclick="EditOnGithubPlugin.onClick(event)">',
+              title,
+              '</a></p>',
+              '</div>'
+            ].join('')
+          }
+      
+          return function(hook, vm) {
+            win.EditOnGithubPlugin.onClick = function(event) {
+              EditOnGithubPlugin.editDoc(event, vm)
+            }
+      
+            if (isFunction(title)) {
+      
+              hook.afterEach(function (html) {
+                return generateHeader(title(vm.route.file)) + html
+              })
+            } else {
+              var header = generateHeader(title)
+      
+              hook.afterEach(function (html) {
+                return header + html
+              })
+            }
+      
+      
+          }
+        }
+      
+        win.EditOnGithubPlugin.create = create
+      }) (window)
+  </script>
+</head>
+  <script>
+    window.$docsify = {
+      search: 'auto',
+      loadSidebar: true,
+      subMaxLevel: 2,
+      name: '',
+      repo: '',
+      plugins: [
+        EditOnGithubPlugin.create('https://github.com/jpcurti/ender3-v3-se-klipper-with-display/blob/master/documentation', null, 'Edit on Github')
+      ]
+    }
+  </script>
+  <!-- Docsify v4 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+</body>
+</html>
