@@ -4141,7 +4141,6 @@ class E3v3seDisplay:
                 25,
                 self.MBASE(3) - 10,
                 self.lcd.screen_width - 10,
-                self.MBASE(4),
             )
             self.lcd.draw_string(
                 False,
