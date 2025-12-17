@@ -101,7 +101,7 @@ class PrinterData:
     EXTRUDE_MAXLENGTH = 200
 
     HEATER_0_MAXTEMP = 275
-    HEATER_0_MINTEMP = 5
+    HEATER_0_MINTEMP = 0
     HOTEND_OVERSHOOT = 15
 
     MAX_E_TEMP = HEATER_0_MAXTEMP - (HOTEND_OVERSHOOT)
@@ -109,7 +109,7 @@ class PrinterData:
 
     BED_OVERSHOOT = 10
     BED_MAXTEMP = 150
-    BED_MINTEMP = 5
+    BED_MINTEMP = 0
 
     BED_MAX_TARGET = BED_MAXTEMP - (BED_OVERSHOOT)
     MIN_BED_TEMP = BED_MINTEMP
@@ -396,10 +396,6 @@ class PrinterData:
                 "\nG90" if self.absolute_moves else "",
             )
         )
-
-    def sendGCode(self, Gcode):
-        gcode = self.printer.lookup_object('gcode')
-        gcode._process_commands([Gcode])
 
     def disable_all_heaters(self):
         self.setExtTemp(0)
