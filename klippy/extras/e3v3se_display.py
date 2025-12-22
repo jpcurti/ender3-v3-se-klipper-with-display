@@ -4134,22 +4134,16 @@ class E3v3seDisplay:
             for i in range(ed):
                 self.Draw_SDItem(i, i + 1)
         else:
-            self.lcd.draw_rectangle(
-                1,
-                self.color_background_red,
-                11,
-                25,
-                self.MBASE(3) - 10,
-                self.lcd.screen_width - 10,
-            )
-            self.lcd.draw_string(
+            self.lcd.draw_string_centered(
                 False,
                 self.lcd.font_16x32,
-                self.color_yellow,
-                self.color_background_red,
-                ((self.lcd.screen_width) - 8 * 16) / 2,
-                self.MBASE(3),
-                "No Media",
+                self.color_white,
+                self.color_background_black,
+                14,
+                32,
+                self.lcd.screen_width / 2,
+                self.lcd.screen_height / 2,
+                "No Media"
             )
 
     def CompletedHoming(self):
