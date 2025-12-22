@@ -397,10 +397,6 @@ class PrinterData:
             )
         )
 
-    def sendGCode(self, Gcode):
-        gcode = self.printer.lookup_object('gcode')
-        gcode._process_commands([Gcode])
-
     def disable_all_heaters(self):
         self.setExtTemp(0)
         self.setBedTemp(0)
