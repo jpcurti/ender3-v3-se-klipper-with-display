@@ -2163,6 +2163,7 @@ class E3v3seDisplay:
                     self.MBASE(temp_line) - 8,
                     self.pd.HMI_ValueStruct.E_Temp,
                 )
+                self.pd.setExtTemp(self.pd.HMI_ValueStruct.E_Temp)
             elif self.pd.HMI_ValueStruct.show_mode == -2:
                 self.checkkey = self.PLAPreheat
                 self.pd.material_preset[0].hotend_temp = self.pd.HMI_ValueStruct.E_Temp
@@ -2209,7 +2210,7 @@ class E3v3seDisplay:
                     self.MBASE(temp_line) - 8,
                     self.pd.HMI_ValueStruct.E_Temp,
                 )
-                self.pd.setTargetHotend(self.pd.HMI_ValueStruct.E_Temp, 0)
+                # self.pd.setTargetHotend(self.pd.HMI_ValueStruct.E_Temp, 0)
             return
         elif encoder_state == self.ENCODER_DIFF_CW:
             self.pd.HMI_ValueStruct.E_Temp += 1
@@ -2269,6 +2270,7 @@ class E3v3seDisplay:
                     self.MBASE(bed_line) - 8,
                     self.pd.HMI_ValueStruct.Bed_Temp,
                 )
+                self.pd.setBedTemp(self.pd.HMI_ValueStruct.Bed_Temp)
             elif self.pd.HMI_ValueStruct.show_mode == -2:
                 self.checkkey = self.PLAPreheat
                 self.pd.material_preset[0].bed_temp = self.pd.HMI_ValueStruct.Bed_Temp
@@ -2315,7 +2317,7 @@ class E3v3seDisplay:
                     self.MBASE(bed_line) - 8,
                     self.pd.HMI_ValueStruct.Bed_Temp,
                 )
-                self.pd.setTargetHotend(self.pd.HMI_ValueStruct.Bed_Temp, 0)
+                # self.pd.setTargetHotend(self.pd.HMI_ValueStruct.Bed_Temp, 0)
             return
         elif encoder_state == self.ENCODER_DIFF_CW:
             self.pd.HMI_ValueStruct.Bed_Temp += 1
