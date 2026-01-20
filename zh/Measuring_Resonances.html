@@ -1,0 +1,2691 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.2.4, mkdocs-material-8.1.3">
+    
+    
+      
+        <title>共振值测量 - Klipper 文档</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.edf004c2.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.e6a45f82.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="_klipper3d/css/extra.css">
+    
+    <script>__md_scope=new URL(".",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+
+  <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-VEN1PGNQL4"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-VEN1PGNQL4",{page_path:e.pathname})})})</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VEN1PGNQL4"></script>
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="blue">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="." title="Klipper 文档" class="md-header__button md-logo" aria-label="Klipper 文档" data-md-component="logo">
+      
+  <img src="img/klipper.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Klipper 文档
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              共振值测量
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9v1z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="grey" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+      <div class="md-header__option">
+        <div class="md-select">
+          
+          <button class="md-header__button md-icon" aria-label="选择当前语言">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2m-5.15 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56M14.34 14H9.66c-.1-.66-.16-1.32-.16-2 0-.68.06-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2M12 19.96c-.83-1.2-1.5-2.53-1.91-3.96h3.82c-.41 1.43-1.08 2.76-1.91 3.96M8 8H5.08A7.923 7.923 0 0 1 9.4 4.44C8.8 5.55 8.35 6.75 8 8m-2.92 8H8c.35 1.25.8 2.45 1.4 3.56A8.008 8.008 0 0 1 5.08 16m-.82-2C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2M12 4.03c.83 1.2 1.5 2.54 1.91 3.97h-3.82c.41-1.43 1.08-2.77 1.91-3.97M18.92 8h-2.95a15.65 15.65 0 0 0-1.38-3.56c1.84.63 3.37 1.9 4.33 3.56M12 2C6.47 2 2 6.5 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2z"/></svg>
+          </button>
+          <div class="md-select__inner">
+            <ul class="md-select__list">
+              
+                <li class="md-select__item">
+                  <a href="/" hreflang="en" class="md-select__link">
+                    English
+                  </a>
+                </li>
+                
+                <li class="md-select__item">
+                  <a href="/zh/" hreflang="zh" class="md-select__link">
+                    简体中文
+                  </a>
+                </li>
+                
+                <li class="md-select__item">
+                  <a href="/zh-Hant/" hreflang="zh-Hant" class="md-select__link">
+                    繁體中文
+                  </a>
+                </li>
+                
+                <li class="md-select__item">
+                  <a href="/hu/" hreflang="hu" class="md-select__link">
+                    Magyar
+                  </a>
+                </li>
+                
+                <li class="md-select__item">
+                  <a href="/it/" hreflang="it" class="md-select__link">
+                    Italiano
+                  </a>
+                </li>
+                
+                <li class="md-select__item">
+                  <a href="/fr/" hreflang="fr" class="md-select__link">
+                    Français
+                  </a>
+                </li>
+                
+            </ul>
+          </div>
+        </div>
+      </div>
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Klipper3d/klipper/" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Klipper3d/klipper
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="Klipper 文档" class="md-nav__button md-logo" aria-label="Klipper 文档" data-md-component="logo">
+      
+  <img src="img/klipper.svg" alt="logo">
+
+    </a>
+    Klipper 文档
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Klipper3d/klipper/" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Klipper3d/klipper
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Overview.html" class="md-nav__link">
+        概述
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Features.html" class="md-nav__link">
+        功能
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="FAQ.html" class="md-nav__link">
+        常见问题
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Releases.html" class="md-nav__link">
+        发行说明
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Config_Changes.html" class="md-nav__link">
+        配置变更
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Contact.html" class="md-nav__link">
+        联系方式
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          安装和配置
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="安装和配置" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          安装和配置
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" type="checkbox" id="__nav_7_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_1">
+          Installation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Installation" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_1">
+          <span class="md-nav__icon md-icon"></span>
+          Installation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Installation.html" class="md-nav__link">
+        安装
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="OctoPrint.html" class="md-nav__link">
+        OctoPrint for Klipper
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2" type="checkbox" id="__nav_7_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_2">
+          配置参考
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="配置参考" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          配置参考
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Config_Reference.html" class="md-nav__link">
+        配置参考
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Rotation_Distance.html" class="md-nav__link">
+        旋转距离
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Config_checks.html" class="md-nav__link">
+        配置检查
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_4" type="checkbox" id="__nav_7_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_4">
+          打印床调平
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="打印床调平" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_4">
+          <span class="md-nav__icon md-icon"></span>
+          打印床调平
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Bed_Level.html" class="md-nav__link">
+        打印床调平
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Delta_Calibrate.html" class="md-nav__link">
+        三角校正
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Probe_Calibrate.html" class="md-nav__link">
+        探针校准
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="BLTouch.html" class="md-nav__link">
+        BL-Touch
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Manual_Level.html" class="md-nav__link">
+        手动调平
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Bed_Mesh.html" class="md-nav__link">
+        床网
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Endstop_Phase.html" class="md-nav__link">
+        限位相位
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Axis_Twist_Compensation.html" class="md-nav__link">
+        轴扭曲补偿
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_5" type="checkbox" id="__nav_7_5" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_5">
+          共振补偿
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="共振补偿" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_5">
+          <span class="md-nav__icon md-icon"></span>
+          共振补偿
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Resonance_Compensation.html" class="md-nav__link">
+        共振补偿
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          共振值测量
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Measuring_Resonances.html" class="md-nav__link md-nav__link--active">
+        共振值测量
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mcus-with-klipper-i2c-fast-mode-support" class="md-nav__link">
+    MCUs with Klipper I2C fast-mode Support
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    安装指南
+  </a>
+  
+    <nav class="md-nav" aria-label="安装指南">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    接线
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spi" class="md-nav__link">
+    SPI加速度计
+  </a>
+  
+    <nav class="md-nav" aria-label="SPI加速度计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adxl345" class="md-nav__link">
+    ADXL345
+  </a>
+  
+    <nav class="md-nav" aria-label="ADXL345">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#direct-to-raspberry-pi" class="md-nav__link">
+    Direct to Raspberry Pi
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-raspberry-pi-pico" class="md-nav__link">
+    Using Raspberry Pi Pico
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#i2c" class="md-nav__link">
+    I2C加速度计
+  </a>
+  
+    <nav class="md-nav" aria-label="I2C加速度计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mpu-9250mpu-9255mpu-6515mpu-6050mpu-6500icm20948" class="md-nav__link">
+    MPU-9250/MPU-9255/MPU-6515/MPU-6050/MPU-6500/ICM20948
+  </a>
+  
+    <nav class="md-nav" aria-label="MPU-9250/MPU-9255/MPU-6515/MPU-6050/MPU-6500/ICM20948">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#avr-atmega328p-arduino-nanoi2ctwi" class="md-nav__link">
+    AVR ATmega328P Arduino Nano上I2C(TWI)的建议连接方案：
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    固定加速度传感器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    软件设置
+  </a>
+  
+    <nav class="md-nav" aria-label="软件设置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rpiadxl345" class="md-nav__link">
+    使用RPI配置ADXL345
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-adxl345-with-pi-pico" class="md-nav__link">
+    Configure ADXL345 With Pi Pico
+  </a>
+  
+    <nav class="md-nav" aria-label="Configure ADXL345 With Pi Pico">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flash-the-pico-firmware" class="md-nav__link">
+    Flash the Pico Firmware
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-the-connection" class="md-nav__link">
+    Configure the Connection
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-lis2dw-series-over-spi" class="md-nav__link">
+    Configure LIS2DW series over SPI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-mpu-60009000-series-with-rpi" class="md-nav__link">
+    Configure MPU-6000/9000 series With RPi
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#picompu-9520" class="md-nav__link">
+    配置与Pico兼容的MPU-9520
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-mpu-9520-compatibles-with-avr" class="md-nav__link">
+    Configure MPU-9520 Compatibles with AVR
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    测量共振值
+  </a>
+  
+    <nav class="md-nav" aria-label="测量共振值">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    检查设置
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    测量共振值
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    平行于喷嘴移动打印床的打印机
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    最大平滑度
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#max_accel" class="md-nav__link">
+    选择 max_accel
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unreliable-measurements-of-resonance-frequencies" class="md-nav__link">
+    Unreliable measurements of resonance frequencies
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    自定义测试轴
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    输入整形器自动校准
+  </a>
+  
+    <nav class="md-nav" aria-label="输入整形器自动校准">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    重新校准输入整形器
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    离线处理加速计数据
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Pressure_Advance.html" class="md-nav__link">
+        压力提前
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="G-Codes.html" class="md-nav__link">
+        G-Codes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_8" type="checkbox" id="__nav_7_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_8">
+          命令模板
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="命令模板" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_8">
+          <span class="md-nav__icon md-icon"></span>
+          命令模板
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Command_Templates.html" class="md-nav__link">
+        命令模板
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Status_Reference.html" class="md-nav__link">
+        状态参考
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="TMC_Drivers.html" class="md-nav__link">
+        TMC 驱动器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Multi_MCU_Homing.html" class="md-nav__link">
+        多微控制器归位与探高
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Slicers.html" class="md-nav__link">
+        切片软件
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Skew_Correction.html" class="md-nav__link">
+        偏斜校正
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Exclude_Object.html" class="md-nav__link">
+        排除对象
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Using_PWM_Tools.html" class="md-nav__link">
+        使用 PWM 工具
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          开发者文档
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="开发者文档" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          开发者文档
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Code_Overview.html" class="md-nav__link">
+        代码总览
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Kinematics.html" class="md-nav__link">
+        运动学
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Protocol.html" class="md-nav__link">
+        协议
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="API_Server.html" class="md-nav__link">
+        API 服务器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="MCU_Commands.html" class="md-nav__link">
+        MCU命令
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="CANBUS_protocol.html" class="md-nav__link">
+        CANBUS 协议 (CANBUS protocol)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Debugging.html" class="md-nav__link">
+        调试
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Benchmarks.html" class="md-nav__link">
+        基准测试
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="CONTRIBUTING.html" class="md-nav__link">
+        为 Klipper 做贡献
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Packaging.html" class="md-nav__link">
+        打包 Klipper
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          设备特定文档
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="设备特定文档" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          设备特定文档
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Example_Configs.html" class="md-nav__link">
+        配置示例
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SDCard_Updates.html" class="md-nav__link">
+        通过SD卡更新
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="RPi_microcontroller.html" class="md-nav__link">
+        RPi 微控制器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Beaglebone.html" class="md-nav__link">
+        Beaglebone
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Bootloaders.html" class="md-nav__link">
+        底层引导程序
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Bootloader_Entry.html" class="md-nav__link">
+        引导加载程序条目
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="CANBUS.html" class="md-nav__link">
+        CAN 总线
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="CANBUS_Troubleshooting.html" class="md-nav__link">
+        CanBus故障排除
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="TSL1401CL_Filament_Width_Sensor.html" class="md-nav__link">
+        TSL1401CL 耗材宽度传感器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Hall_Filament_Width_Sensor.html" class="md-nav__link">
+        霍尔耗材线径传感器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Eddy_Probe.html" class="md-nav__link">
+        Eddy 感应涡流探针
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Load_Cell.html" class="md-nav__link">
+        Load Cells
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Sponsors.html" class="md-nav__link">
+        赞助
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mcus-with-klipper-i2c-fast-mode-support" class="md-nav__link">
+    MCUs with Klipper I2C fast-mode Support
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    安装指南
+  </a>
+  
+    <nav class="md-nav" aria-label="安装指南">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    接线
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spi" class="md-nav__link">
+    SPI加速度计
+  </a>
+  
+    <nav class="md-nav" aria-label="SPI加速度计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adxl345" class="md-nav__link">
+    ADXL345
+  </a>
+  
+    <nav class="md-nav" aria-label="ADXL345">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#direct-to-raspberry-pi" class="md-nav__link">
+    Direct to Raspberry Pi
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-raspberry-pi-pico" class="md-nav__link">
+    Using Raspberry Pi Pico
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#i2c" class="md-nav__link">
+    I2C加速度计
+  </a>
+  
+    <nav class="md-nav" aria-label="I2C加速度计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mpu-9250mpu-9255mpu-6515mpu-6050mpu-6500icm20948" class="md-nav__link">
+    MPU-9250/MPU-9255/MPU-6515/MPU-6050/MPU-6500/ICM20948
+  </a>
+  
+    <nav class="md-nav" aria-label="MPU-9250/MPU-9255/MPU-6515/MPU-6050/MPU-6500/ICM20948">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#avr-atmega328p-arduino-nanoi2ctwi" class="md-nav__link">
+    AVR ATmega328P Arduino Nano上I2C(TWI)的建议连接方案：
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    固定加速度传感器
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    软件设置
+  </a>
+  
+    <nav class="md-nav" aria-label="软件设置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rpiadxl345" class="md-nav__link">
+    使用RPI配置ADXL345
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-adxl345-with-pi-pico" class="md-nav__link">
+    Configure ADXL345 With Pi Pico
+  </a>
+  
+    <nav class="md-nav" aria-label="Configure ADXL345 With Pi Pico">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flash-the-pico-firmware" class="md-nav__link">
+    Flash the Pico Firmware
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-the-connection" class="md-nav__link">
+    Configure the Connection
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-lis2dw-series-over-spi" class="md-nav__link">
+    Configure LIS2DW series over SPI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-mpu-60009000-series-with-rpi" class="md-nav__link">
+    Configure MPU-6000/9000 series With RPi
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#picompu-9520" class="md-nav__link">
+    配置与Pico兼容的MPU-9520
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configure-mpu-9520-compatibles-with-avr" class="md-nav__link">
+    Configure MPU-9520 Compatibles with AVR
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    测量共振值
+  </a>
+  
+    <nav class="md-nav" aria-label="测量共振值">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    检查设置
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    测量共振值
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    平行于喷嘴移动打印床的打印机
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    最大平滑度
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#max_accel" class="md-nav__link">
+    选择 max_accel
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unreliable-measurements-of-resonance-frequencies" class="md-nav__link">
+    Unreliable measurements of resonance frequencies
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    自定义测试轴
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    输入整形器自动校准
+  </a>
+  
+    <nav class="md-nav" aria-label="输入整形器自动校准">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    重新校准输入整形器
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    离线处理加速计数据
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+<a href="https://github.com/Klipper3d/klipper/blob/master/docs/Measuring_Resonances.md" title="编辑此页" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+<h1 id="_1">共振值测量<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>Klipper has built-in support for the ADXL345, MPU-9250, LIS2DW and LIS3DH compatible accelerometers which can be used to measure resonance frequencies of the printer for different axes, and auto-tune <a href="Resonance_Compensation.html">input shapers</a> to compensate for resonances. Note that using accelerometers requires some soldering and crimping. The ADXL345 can be connected to the SPI interface of a Raspberry Pi or MCU board (it needs to be reasonably fast). The MPU family can be connected to the I2C interface of a Raspberry Pi directly, or to an I2C interface of an MCU board that supports 400kbit/s <em>fast mode</em> in Klipper. The LIS2DW and LIS3DH can be connected to either SPI or I2C with the same considerations as above.</p>
+<p>When sourcing accelerometers, be aware that there are a variety of different PCB board designs and different clones of them. If it is going to be connected to a 5V printer MCU ensure it has a voltage regulator and level shifters.</p>
+<p>For ADXL345s, make sure that the board supports SPI mode (a small number of boards appear to be hard-configured for I2C by pulling SDO to GND).</p>
+<p>For MPU-9250/MPU-9255/MPU-6515/MPU-6050/MPU-6500/ICM20948s and LIS2DW/LIS3DH there are also a variety of board designs and clones with different I2C pull-up resistors which will need supplementing.</p>
+<h2 id="mcus-with-klipper-i2c-fast-mode-support">MCUs with Klipper I2C <em>fast-mode</em> Support<a class="headerlink" href="#mcus-with-klipper-i2c-fast-mode-support" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th align="center">MCU Family</th>
+<th align="left">微控制器(S)测试</th>
+<th align="left">支持的微控制器(S)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">Raspberry Pi</td>
+<td align="left">3B+, Pico</td>
+<td align="left">3A, 3A+, 3B, 4</td>
+</tr>
+<tr>
+<td align="center">AVR解锁</td>
+<td align="left">ATmega328p</td>
+<td align="left">ATmega32u4, ATmega128, ATmega168, ATmega328, ATmega644p, ATmega1280, ATmega1284, ATmega2560</td>
+</tr>
+<tr>
+<td align="center">AVR AT90</td>
+<td align="left">-</td>
+<td align="left">AT90usb646, AT90usb1286</td>
+</tr>
+<tr>
+<td align="center">SAMD</td>
+<td align="left">SAMC21G18</td>
+<td align="left">SAMC21G18, SAMD21G18, SAMD21E18, SAMD21J18, SAMD21E15, SAMD51G19, SAMD51J19, SAMD51N19, SAMD51P20, SAME51J19, SAME51N19, SAME54P20</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_2">安装指南<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="_3">接线<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>建议使用带有屏蔽双绞线(CAT5e或更好的)的以太网电缆，以实现远距离信号的完整性。如果您仍然遇到信号完整性问题(SPI/I2C错误)：</p>
+<ul>
+<li>用数字万用表仔细检查接线：<ul>
+<li>关闭时正确连接(连续性)</li>
+<li>正确的电源和接地电压</li>
+</ul>
+</li>
+<li>仅限I2C：<ul>
+<li>检查SCL和SDA线路的3.3V电阻是否在900欧姆到1.8K的范围内</li>
+<li>有关完整的技术细节，请参考<a href="https://www.pololu.com/file/0J435/UM10204.pdf">I2C-Bus规范的第7章和<em>FAST-MODE</em>的用户手册UM10204</a></li>
+</ul>
+</li>
+<li>缩短电缆</li>
+</ul>
+<p>仅将以太网电缆屏蔽连接到MCU板/PI接地。</p>
+<p><strong><em>通电前请仔细检查接线，以防止损坏您的MCU/树莓PI或加速度计。</em></strong></p>
+<h3 id="spi">SPI加速度计<a class="headerlink" href="#spi" title="Permanent link">&para;</a></h3>
+<p>三条双绞线的建议双绞线顺序：</p>
+<div class="highlight"><pre><span></span><code>GND+MISO
+3.3V+MOSI
+SCLK +CS
+</code></pre></div>
+
+<p>请注意，与电缆屏蔽不同，GND必须在两端连接。</p>
+<h4 id="adxl345">ADXL345<a class="headerlink" href="#adxl345" title="Permanent link">&para;</a></h4>
+<h5 id="direct-to-raspberry-pi">Direct to Raspberry Pi<a class="headerlink" href="#direct-to-raspberry-pi" title="Permanent link">&para;</a></h5>
+<p><strong>注：许多MCU将在SPI模式下使用ADXL345(例如PI Pico)，布线和配置将根据您的特定主板和可用的引脚而有所不同。</strong></p>
+<p>我们需要将ADXL345连接到树莓派的SPI接口。注意，尽管ADXL345文档推荐使用I2C，但其数据吞吐能力不足，<strong>不能</strong>实现共振测量的要求。推荐的接线图为：</p>
+<table>
+<thead>
+<tr>
+<th align="center">ADXL345引脚</th>
+<th align="center">树莓派引脚</th>
+<th align="center">树莓派引脚名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">3V3 或 VCC</td>
+<td align="center">01</td>
+<td align="center">3.3V DC power</td>
+</tr>
+<tr>
+<td align="center">GND</td>
+<td align="center">06</td>
+<td align="center">地（GND）</td>
+</tr>
+<tr>
+<td align="center">CS</td>
+<td align="center">24</td>
+<td align="center">GPIO08 (SPI0_CE0_N)</td>
+</tr>
+<tr>
+<td align="center">SDO</td>
+<td align="center">21</td>
+<td align="center">GPIO09 (SPI0_MISO)</td>
+</tr>
+<tr>
+<td align="center">SDA</td>
+<td align="center">19</td>
+<td align="center">GPIO10 (SPI0_MOSI)</td>
+</tr>
+<tr>
+<td align="center">SCL</td>
+<td align="center">23</td>
+<td align="center">GPIO11 (SPI0_SCLK)</td>
+</tr>
+</tbody>
+</table>
+<p>部分ADXL345开发板的Fritzing接线图如下：</p>
+<p><img alt="ADXL345-树莓派" src="img/adxl345-fritzing.png" /></p>
+<h5 id="using-raspberry-pi-pico">Using Raspberry Pi Pico<a class="headerlink" href="#using-raspberry-pi-pico" title="Permanent link">&para;</a></h5>
+<p>You may connect the ADXL345 to your Raspberry Pi Pico and then connect the Pico to your Raspberry Pi via USB. This makes it easy to reuse the accelerometer on other Klipper devices, as you can connect via USB instead of GPIO. The Pico does not have much processing power, so make sure it is only running the accelerometer and not performing any other duties.</p>
+<p>In order to avoid damage to your RPi make sure to connect the ADXL345 to 3.3V only. Depending on the board's layout, a level shifter may be present, which makes 5V dangerous for your RPi.</p>
+<table>
+<thead>
+<tr>
+<th align="center">ADXL345引脚</th>
+<th align="center">Pico pin</th>
+<th align="center">Pico pin name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">3V3 或 VCC</td>
+<td align="center">36</td>
+<td align="center">3.3V DC power</td>
+</tr>
+<tr>
+<td align="center">GND</td>
+<td align="center">388</td>
+<td align="center">地（GND）</td>
+</tr>
+<tr>
+<td align="center">CS</td>
+<td align="center">2</td>
+<td align="center">GP1 (SPI0_CSn)</td>
+</tr>
+<tr>
+<td align="center">SDO</td>
+<td align="center">1</td>
+<td align="center">GP0 (SPI0_RX)</td>
+</tr>
+<tr>
+<td align="center">SDA</td>
+<td align="center">5</td>
+<td align="center">GP3 (SPI0_TX)</td>
+</tr>
+<tr>
+<td align="center">SCL</td>
+<td align="center">4</td>
+<td align="center">GP2 (SPI0_SCK)</td>
+</tr>
+</tbody>
+</table>
+<p>Wiring diagrams for some of the ADXL345 boards:</p>
+<p><img alt="ADXL345-Pico" src="img/adxl345-pico.png" /></p>
+<h3 id="i2c">I2C加速度计<a class="headerlink" href="#i2c" title="Permanent link">&para;</a></h3>
+<p>建议的三对双绞线顺序(首选)：</p>
+<div class="highlight"><pre><span></span><code>3.3V+GND
+SDA+GND
+SCL+GND
+</code></pre></div>
+
+<p>或用于两对：</p>
+<div class="highlight"><pre><span></span><code>3.3V+SDA
+GND+SCL
+</code></pre></div>
+
+<p>请注意，与电缆屏蔽不同，任何接地网(S)都应在两端连接。</p>
+<h4 id="mpu-9250mpu-9255mpu-6515mpu-6050mpu-6500icm20948">MPU-9250/MPU-9255/MPU-6515/MPU-6050/MPU-6500/ICM20948<a class="headerlink" href="#mpu-9250mpu-9255mpu-6515mpu-6050mpu-6500icm20948" title="Permanent link">&para;</a></h4>
+<p>这些加速度计已在RPI、RP2040(Pico)和AVR上以400kbit/S(<em>快速模式</em>)的I2C模式工作。一些MPU加速度计模块包括上拉，但有些模块在10K时太大，必须更换或补充较小的并联电阻。</p>
+<p>推荐的树莓派上的I2C连接方案：</p>
+<table>
+<thead>
+<tr>
+<th align="center">MPU-9250引脚</th>
+<th align="center">树莓派引脚</th>
+<th align="center">树莓派引脚名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">VCC</td>
+<td align="center">01</td>
+<td align="center">3.3v 直流（DC）电源</td>
+</tr>
+<tr>
+<td align="center">GND</td>
+<td align="center">09</td>
+<td align="center">地（GND）</td>
+</tr>
+<tr>
+<td align="center">SDA</td>
+<td align="center">03</td>
+<td align="center">GPIO02(SDA1)</td>
+</tr>
+<tr>
+<td align="center">SCL</td>
+<td align="center">05</td>
+<td align="center">GPIO03 (SCL1)</td>
+</tr>
+</tbody>
+</table>
+<p>RPI在SCL和SDA上都有1.8k的Bit-in引体向上。</p>
+<p>！<a href="img/mpu9250-Pi-fritzing.png">MPU-9250接入PI</a></p>
+<p>RP2040上I2C(I2c0a)的建议连接方案：</p>
+<table>
+<thead>
+<tr>
+<th align="center">MPU-9250引脚</th>
+<th align="center">RP2040引脚</th>
+<th align="center">RP2040引脚名称</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">VCC</td>
+<td align="center">36</td>
+<td align="center">3v3</td>
+</tr>
+<tr>
+<td align="center">GND</td>
+<td align="center">388</td>
+<td align="center">地（GND）</td>
+</tr>
+<tr>
+<td align="center">SDA</td>
+<td align="center">01</td>
+<td align="center">GP0 (I2C0 SDA)</td>
+</tr>
+<tr>
+<td align="center">SCL</td>
+<td align="center">02</td>
+<td align="center">GP1 (I2C0 SCL)</td>
+</tr>
+</tbody>
+</table>
+<p>Pico不包括任何内置I2C上拉电阻。</p>
+<p>！<a href="img/mpu9250-Pico-fritzing.png">MPU-9250接入Pico</a></p>
+<h5 id="avr-atmega328p-arduino-nanoi2ctwi">AVR ATmega328P Arduino Nano上I2C(TWI)的建议连接方案：<a class="headerlink" href="#avr-atmega328p-arduino-nanoi2ctwi" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th align="center">MPU-9250引脚</th>
+<th align="center">Atmega 328P TQFP 32针脚</th>
+<th align="center">Atmega 328P端号名称</th>
+<th align="center">Arduino纳米针</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">VCC</td>
+<td align="center">39</td>
+<td align="center">-</td>
+<td align="center">-</td>
+</tr>
+<tr>
+<td align="center">GND</td>
+<td align="center">388</td>
+<td align="center">地（GND）</td>
+<td align="center">GND</td>
+</tr>
+<tr>
+<td align="center">SDA</td>
+<td align="center">27</td>
+<td align="center">SDA</td>
+<td align="center">A4</td>
+</tr>
+<tr>
+<td align="center">SCL</td>
+<td align="center">28</td>
+<td align="center">SCL</td>
+<td align="center">A5</td>
+</tr>
+</tbody>
+</table>
+<p>Arduino Nano不包括任何内置上拉电阻，也不包括3.3V电源插针。</p>
+<h3 id="_4">固定加速度传感器<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>加速度传感器应固定在打印头上。应根据打印机的情况设计合适的固定件。推荐将加速度的测量轴与打印机运行轴的方向进行对齐。然而，如果轴对齐极其麻烦，可以将打印机的轴使用其他测量轴对齐，比如打印机+X对应传感器-X，甚至打印机+X对应传感器-Z等。</p>
+<p>下面是ADXL345固定到SmartEffector的示例：</p>
+<p><img alt="ADXL345固定在SmartEffector" src="img/adxl345-mount.jpg" /></p>
+<p>注意，滑床式打印机需要设计两个固定件：一个安装于打印头，另一个用于热床，并进行两次测量。详见 <a href="#bed-slinger-printers">对应分节</a>。</p>
+<p><strong>注意！</strong>：务必确保加速度传感器和任何螺丝都不应该接触到打印机的金属部分。紧固件必须设计成在加速度传感器和打印机框体间形成电气绝缘。错误的设计可能会形成短路，从而损坏电气元件。</p>
+<h3 id="_5">软件设置<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>请注意，共振测量和整形器自动校准需要默认情况下不安装的其他软件依赖项。首先，在你的树莓派上运行以下命令：</p>
+<div class="highlight"><pre><span></span><code>sudo apt update
+sudo apt install python3-numpy python3-matplotlib libatlas-base-dev libopenblas-dev
+</code></pre></div>
+
+<p>接下来，为了在Klipper环境中安装NumPy，运行命令：</p>
+<div class="highlight"><pre><span></span><code>~/klippy-env/bin/pip install -v &quot;numpy&lt;1.26&quot;
+</code></pre></div>
+
+<p>Note that, depending on the performance of the CPU, it may take <em>a lot</em> of time, up to 10-20 minutes. Be patient and wait for the completion of the installation. On some occasions, if the board has too little RAM the installation may fail and you will need to enable swap. Also note the forced version, due to newer versions of NumPY having requirements that may not be satisfied in some klipper python environments.</p>
+<p>Once installed please check that no errors show from the command:</p>
+<div class="highlight"><pre><span></span><code>~/klippy-env/bin/python -c &#39;import numpy;&#39;
+</code></pre></div>
+
+<p>The correct output should simply be a new line.</p>
+<h4 id="rpiadxl345">使用RPI配置ADXL345<a class="headerlink" href="#rpiadxl345" title="Permanent link">&para;</a></h4>
+<p>首先，检查并按照<a href="rpi_微控制器.md">RPI微控制器文档</a>中的说明在Raspberry PI上设置“Linux MCU”。这将配置在您的PI上运行的第二个Klipper实例。</p>
+<p>通过运行<code>sudo raspi-config</code> 后的 "Interfacing options"菜单中启用 SPI 以确保Linux SPI 驱动已启用。</p>
+<p>在printer.cfg中添加以下内容：</p>
+<div class="highlight"><pre><span></span><code>[MCU RPI]。
+序列：/tmp/Klipper_host_mcu。
+
+[adx1345]。
+CS_PIN：RPI：无。
+
+[共振测试仪]。
+加速芯片：adxl345。
+探测点(_P)：
+100、100、20#一个例子
+</code></pre></div>
+
+<p>建议在测试开始前，用探针在热床中央进行一次探测，触发后稍微上移。</p>
+<h4 id="configure-adxl345-with-pi-pico">Configure ADXL345 With Pi Pico<a class="headerlink" href="#configure-adxl345-with-pi-pico" title="Permanent link">&para;</a></h4>
+<h5 id="flash-the-pico-firmware">Flash the Pico Firmware<a class="headerlink" href="#flash-the-pico-firmware" title="Permanent link">&para;</a></h5>
+<p>On your Raspberry Pi, compile the firmware for the Pico.</p>
+<div class="highlight"><pre><span></span><code>cd ~/klipper
+make clean
+make menuconfig
+</code></pre></div>
+
+<p><img alt="Pico menuconfig" src="img/klipper_pico_menuconfig.png" /></p>
+<p>Now, while holding down the <code>BOOTSEL</code> button on the Pico, connect the Pico to the Raspberry Pi via USB. Compile and flash the firmware.</p>
+<div class="highlight"><pre><span></span><code>make flash FLASH_DEVICE=first
+</code></pre></div>
+
+<p>If that fails, you will be told which <code>FLASH_DEVICE</code> to use. In this example, that's <code>make flash FLASH_DEVICE=2e8a:0003</code>. <img alt="Determine flash device" src="img/flash_rp2040_FLASH_DEVICE.png" /></p>
+<h5 id="configure-the-connection">Configure the Connection<a class="headerlink" href="#configure-the-connection" title="Permanent link">&para;</a></h5>
+<p>The Pico will now reboot with the new firmware and should show up as a serial device. Find the pico serial device with <code>ls /dev/serial/by-id/*</code>. You can now add an <code>adxl.cfg</code> file with the following settings:</p>
+<div class="highlight"><pre><span></span><code>[mcu adxl]
+# Change &lt;mySerial&gt; to whatever you found above. For example,
+# usb-Klipper_rp2040_E661640843545B2E-if00
+serial: /dev/serial/by-id/usb-Klipper_rp2040_&lt;mySerial&gt;
+
+[adxl345]
+cs_pin: adxl:gpio1
+spi_bus: spi0a
+axes_map: x,z,y
+
+[resonance_tester]
+accel_chip: adxl345
+probe_points:
+    # Somewhere slightly above the middle of your print bed
+    147,154, 20
+
+[output_pin power_mode] # Improve power stability
+pin: adxl:gpio23
+</code></pre></div>
+
+<p>If setting up the ADXL345 configuration in a separate file, as shown above, you'll also want to modify your <code>printer.cfg</code> file to include this:</p>
+<div class="highlight"><pre><span></span><code>[include adxl.cfg] # Comment this out when you disconnect the accelerometer
+</code></pre></div>
+
+<p>通过<code>RESTART</code>命令重启Klipper。</p>
+<h4 id="configure-lis2dw-series-over-spi">Configure LIS2DW series over SPI<a class="headerlink" href="#configure-lis2dw-series-over-spi" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code>[MCU列表]。
+#将&lt;mySerial&gt;更改为您在上面找到的任何内容。例如,。
+#usb-klipper_rp2040_E661640843545B2E-if00。
+序列号：/dev/serial/by-id/usb-Klipper_rp2040_&lt;mySerial&gt;。
+
+[lis2dw]。
+Cs_pin：lis：gpio1。
+SPI_BUS：SP0A。
+AXES_MAP：x、z、y。
+
+[共振测试仪]。
+加速芯片：lis2dw。
+探测点(_P)：
+#在你的打印床中间稍高一点的地方。
+147,154，20
+</code></pre></div>
+
+<h4 id="configure-mpu-60009000-series-with-rpi">Configure MPU-6000/9000 series With RPi<a class="headerlink" href="#configure-mpu-60009000-series-with-rpi" title="Permanent link">&para;</a></h4>
+<p>Make sure the Linux I2C driver is enabled and the baud rate is set to 400000 (see <a href="RPi_microcontroller.html#optional-enabling-i2c">Enabling I2C</a> section for more details). Then, add the following to the printer.cfg:</p>
+<div class="highlight"><pre><span></span><code>[MCU RPI]。
+序列：/tmp/Klipper_host_mcu。
+
+[mpu9250]。
+I2C_MCU：RPI。
+I2C_BUS：I2c.1。
+
+[共振测试仪]。
+加速芯片：mpu9250。
+探测点(_P)：
+100、100、20#一个例子
+</code></pre></div>
+
+<p>If you are using the ICM20948, replace instances of "mpu9250" with "icm20948".</p>
+<h4 id="picompu-9520">配置与Pico兼容的MPU-9520<a class="headerlink" href="#picompu-9520" title="Permanent link">&para;</a></h4>
+<p>默认情况下，Pico I2C设置为400000。只需将以下内容添加到printer.cfg：</p>
+<div class="highlight"><pre><span></span><code>[mcu pico]
+serial: /dev/serial/by-id/&lt;your Pico&#39;s serial ID&gt;
+
+[mpu9250]
+i2c_mcu: pico
+i2c_bus: i2c0a
+
+[resonance_tester]
+accel_chip: mpu9250
+probe_points:
+    100, 100, 20  # an example
+
+[static_digital_output pico_3V3pwm] # Improve power stability
+pins: pico:gpio23
+</code></pre></div>
+
+<p>If you are using the ICM20948, replace instances of "mpu9250" with "icm20948".</p>
+<h4 id="configure-mpu-9520-compatibles-with-avr">Configure MPU-9520 Compatibles with AVR<a class="headerlink" href="#configure-mpu-9520-compatibles-with-avr" title="Permanent link">&para;</a></h4>
+<p>AVR I2C will be set to 400000 by the mpu9250 option. Simply add the following to the printer.cfg:</p>
+<div class="highlight"><pre><span></span><code>[mcu nano]
+serial: /dev/serial/by-id/&lt;your nano&#39;s serial ID&gt;
+
+[mpu9250]
+i2c_mcu: nano
+
+[resonance_tester]
+accel_chip: mpu9250
+probe_points:
+    100, 100, 20  # an example
+</code></pre></div>
+
+<p>If you are using the ICM20948, replace instances of "mpu9250" with "icm20948".</p>
+<p>通过<code>RESTART</code>命令重启Klipper。</p>
+<h2 id="_6">测量共振值<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h3 id="_7">检查设置<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p>首先测试加速度传感器的连接。</p>
+<ul>
+<li>对于只有一个加速度传感器的情况，在Octoprint，输入<code>ACCELEROMETER_QUERY</code>（检查已连接的加速度传感器状态）</li>
+<li>对于“滑动床”（即有多个加速度传感器），输入<code>ACCELEROMETER_QUERY CHIP=&lt;chip&gt;</code>，其中<code>&lt;chip&gt;</code>是设置文档中的加速度传感器命名，例如 <code>CHIP=bed</code>(参见：<a href="#bed-slinger-printers">bed-slinger</a>)。</li>
+</ul>
+<p>你应该会看到来自加速度计的当前测量值，包括自由落体（free-fall）的加速度，比如说。</p>
+<div class="highlight"><pre><span></span><code>Recv: // adxl345 values (x, y, z): 470.719200, 941.438400, 9728.196800
+</code></pre></div>
+
+<p>If you get an error like <code>Invalid adxl345 id (got xx vs e5)</code>, where <code>xx</code> is some other ID, immediately try again. There's an issue with SPI initialization. If you still get an error, it is indicative of the connection problem with ADXL345, or the faulty sensor. Double-check the power, the wiring (that it matches the schematics, no wire is broken or loose, etc.), and soldering quality.</p>
+<p><strong>If you are using a MPU-9250 compatible accelerometer and it shows up as <code>mpu-unknown</code>, use with caution! They are probably refurbished chips!</strong></p>
+<p>下一步，在Octoprint中输入 <code>MEASURE_AXES_NOISE</code>，之后将会显示各个轴的基准测量噪声（其值应在1-100之间）。如果轴的噪声极高（例如 1000 或更高）可能意味着3D打印机上存在传感器问题、电源问题或不平衡的风扇。</p>
+<h3 id="_8">测量共振值<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p>现在可以运行进行实测。运行以下命令:</p>
+<div class="highlight"><pre><span></span><code>TEST_RESONURS AXIS=X
+</code></pre></div>
+
+<p>注意，这将在X轴上产生振动。如果之前启用了输入整形（input shaping ），它也将禁用输入整形，因为在启用输入整形的情况下运行共振测试是无效的。</p>
+<p><strong>注意！</strong>请确保第一次运行时时刻观察打印机，以确保振动不会太剧烈（<code>M112</code>命令可以在紧急情况下中止测试；但愿不会到这一步）。如果振动确实太强烈，你可以尝试在<code>[Resonance_tester]</code>分段中为<code>accel_per_hz</code>参数指定一个低于默认值的值，比如说。</p>
+<div class="highlight"><pre><span></span><code>[共振测试仪]。
+加速芯片：adxl345。
+Accel_PER_HZ：50#默认为75。
+探测点：...
+</code></pre></div>
+
+<p>如果它适用于 X 轴，则也可以为 Y 轴运行：</p>
+<div class="highlight"><pre><span></span><code>TEST_RESONANCES AXIS=Y
+</code></pre></div>
+
+<p>This will generate 2 CSV files (<code>/tmp/resonances_x_*.csv</code> and <code>/tmp/resonances_y_*.csv</code>). These files can be processed with the stand-alone script on a Raspberry Pi. This script is intended to be run with a single CSV file for each axis measured, although it can be used with multiple CSV files if you desire to average the results. Averaging results can be useful, for example, if resonance tests were done at multiple test points. Delete the extra CSV files if you do not desire to average them.</p>
+<div class="highlight"><pre><span></span><code>~/klipper/scripts/calibrate_shaper.py /tmp/resonances_x_*.csv -o /tmp/shaper_calibrate_x.png
+~/klipper/scripts/calibrate_shaper.py /tmp/resonances_y_*.csv -o /tmp/shaper_calibrate_y.png
+</code></pre></div>
+
+<p>此脚本将生成频率响应的图表 <code>/tmp/shaper_calibrate_x.png</code> 和 <code>/tmp/shaper_calibrate_y.png</code>。它还会给出每个输入整形器的建议频率，以及推荐的输入整形器。例如：</p>
+<p><img alt="共振" src="img/calibrate-y.png" /></p>
+<div class="highlight"><pre><span></span><code>贴合成形器‘zv’频率=34.4HZ(振动=4.0%，平滑~=0.132)。
+为避免使用‘zv’进行过多平滑处理，建议使用max_Accel&lt;=4500 mm/秒^2。
+贴合成形器‘mzv’频率=34.6hz(振动=0.0%，平滑~=0.170)。
+为避免使用‘mzv’进行过多平滑处理，建议使用max_Accel&lt;=3500 mm/秒^2。
+贴合成形器‘EI’频率=41.4HZ(振动=0.0%，平滑~=0.188)。
+为避免使用‘ei’进行过多平滑处理，建议使用max_Accel&lt;=3200 mm/秒^2。
+贴合成形器‘2hump_ei’频率=51.8HZ(振动=0.0%，平滑~=0.201)。
+为避免使用‘2hump_ei’时过于平滑，建议使用max_Accel&lt;=3000 mm/秒^2。
+成型器‘3hump_ei’频率=61.8HZ(振动=0.0%，平滑~=0.215)。
+为避免使用‘3hump_ei’时过于平滑，建议使用max_Accel&lt;=2800 mm/秒^2。
+推荐的整形器为mzv@34.6 hz
+</code></pre></div>
+
+<p>推荐的配置可以添加到<code>[input_shaper]</code>的<code>printer.cfg</code>分段中，例如：</p>
+<div class="highlight"><pre><span></span><code>[输入整形器]。
+造型频率x：...。
+Shaper_type_x：...。
+Shaper_freq_y：34.6。
+Shaper_type_y：mzv。
+
+[打印机]。
+Max_Accel：3000#不应超过X和Y轴的估计max_Accel
+</code></pre></div>
+
+<p>也可以根据生成的图表自己选择一些其他配置：图表上的功率谱密度的峰值对应于打印机的共振频率。</p>
+<p>Note that alternatively you can run the input shaper auto-calibration from Klipper <a href="#input-shaper-auto-calibration">directly</a>, which can be convenient, for example, for the input shaper <a href="#input-shaper-re-calibration">re-calibration</a>.</p>
+<h3 id="_9">平行于喷嘴移动打印床的打印机<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p>如果打印机的打印床可以平行于喷嘴移动，测量X和Y轴时需要改变加速度计的安装位置。安装加速度计到打印头以测量X轴共振，安装到打印床以测量Y轴（该类打印机的常见配置）。</p>
+<p>However, you can also connect two accelerometers simultaneously, though the ADXL345 must be connected to different boards (say, to an RPi and printer MCU board), or to two different physical SPI interfaces on the same board (rarely available). Then they can be configured in the following manner:</p>
+<div class="highlight"><pre><span></span><code>[adx1345 HOTEND]。
+#假设`hotend`芯片连接到RPI。
+CS_PIN：RPI：无。
+
+[adx1345张床]。
+#假设`bed`芯片连接到打印机MCU板。
+CS_PIN：...#打印板SPI芯片选择(CS)针脚。
+
+[共振测试仪]。
+#假设床吊杆打印机的典型设置。
+加速芯片_x：adx1345主机。
+Accel芯片y：adx1345床。
+探测点：...
+</code></pre></div>
+
+<p>Two MPUs can share one I2C bus, but they <strong>cannot</strong> measure simultaneously as the 400kbit/s I2C bus is not fast enough. One must have its AD0 pin pulled-down to 0V (address 104) and the other its AD0 pin pulled-up to 3.3V (address 105):</p>
+<div class="highlight"><pre><span></span><code>[mpu9250 hotend]
+i2c_mcu: rpi
+i2c_bus: i2c.1
+i2c_address: 104 # This MPU has pin AD0 pulled low
+
+[mpu9250 bed]
+i2c_mcu: rpi
+i2c_bus: i2c.1
+i2c_address: 105 # This MPU has pin AD0 pulled high
+
+[resonance_tester]
+# Assuming the typical setup of the bed slinger printer
+accel_chip_x: mpu9250 hotend
+accel_chip_y: mpu9250 bed
+probe_points: ...
+</code></pre></div>
+
+<p>[Test with each MPU individually before connecting both to the bus for easy debugging.]</p>
+<p>然后，命令<code>TEST_RESONANCES AXIS=X</code>和<code>TEST_RESONANCES AXIS=Y</code>会使用每个轴相应的加速度计。</p>
+<h3 id="_10">最大平滑度<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<p>请注意，输入整形器会在使一些打印的路径被平滑。由执行<code>calibrate_shaper.py</code>脚本或<code>SHAPER_CALIBRATE</code>命令自动得出的输入整形器会尽量不加剧平滑的同时试图最小化产生的振动。脚本可能会得出不是最优的整形器的频率，或者你可能希望以更强的剩余振动为代价来减少平滑度。在这些情况下，可以要求脚本限制输入整形器的最大平滑度。</p>
+<p>参考以下自动调谐结果：</p>
+<p><img alt="共振" src="img/calibrate-x.png" /></p>
+<div class="highlight"><pre><span></span><code>Fitted shaper &#39;zv&#39; frequency = 57.8 Hz (vibrations = 20.3%, smoothing ~= 0.053)
+To avoid too much smoothing with &#39;zv&#39;, suggested max_accel &lt;= 13000 mm/sec^2
+Fitted shaper &#39;mzv&#39; frequency = 34.8 Hz (vibrations = 3.6%, smoothing ~= 0.168)
+To avoid too much smoothing with &#39;mzv&#39;, suggested max_accel &lt;= 3600 mm/sec^2
+Fitted shaper &#39;ei&#39; frequency = 48.8 Hz (vibrations = 4.9%, smoothing ~= 0.135)
+To avoid too much smoothing with &#39;ei&#39;, suggested max_accel &lt;= 4400 mm/sec^2
+Fitted shaper &#39;2hump_ei&#39; frequency = 45.2 Hz (vibrations = 0.1%, smoothing ~= 0.264)
+To avoid too much smoothing with &#39;2hump_ei&#39;, suggested max_accel &lt;= 2200 mm/sec^2
+Fitted shaper &#39;3hump_ei&#39; frequency = 48.0 Hz (vibrations = 0.0%, smoothing ~= 0.356)
+To avoid too much smoothing with &#39;3hump_ei&#39;, suggested max_accel &lt;= 1500 mm/sec^2
+Recommended shaper is 2hump_ei @ 45.2 Hz
+</code></pre></div>
+
+<p>请注意，报告的 <code>smoothing</code>（平滑）值是抽象的预测值。这些值可用于比较不同的配置：值越高，整形器造成的平滑度就越高。但是，这些平滑值并不表示任何实际的平滑度的量，因为实际的平滑取决于<a href="#selecting-max-accel"><code>max_accel</code></a>和<code>square_corner_velocity</code>参数。因此，如果希望了解所选配置造成的实际平滑效果，需要打印一些测试件。</p>
+<p>在上面的示例中，脚本给出了不错的整形器参数建议，但是如果想在 X 轴上减少平滑度，就需要尝试使用以下命令限制脚本挑选参数时的整形器平滑值极限：</p>
+<div class="highlight"><pre><span></span><code>~/klipper/scripts/calibrate_shaper.py /tmp/resonances_x_*.csv -o /tmp/shaper_calibrate_x.png --max_smoothing=0.2
+</code></pre></div>
+
+<p>这将平滑值限制在0.2。现在可以得到以下结果：</p>
+<p><img alt="共振" src="img/calibrate-x-max-smoothing.png" /></p>
+<div class="highlight"><pre><span></span><code>Fitted shaper &#39;zv&#39; frequency = 55.4 Hz (vibrations = 19.7%, smoothing ~= 0.057)
+To avoid too much smoothing with &#39;zv&#39;, suggested max_accel &lt;= 12000 mm/sec^2
+Fitted shaper &#39;mzv&#39; frequency = 34.6 Hz (vibrations = 3.6%, smoothing ~= 0.170)
+To avoid too much smoothing with &#39;mzv&#39;, suggested max_accel &lt;= 3500 mm/sec^2
+Fitted shaper &#39;ei&#39; frequency = 48.2 Hz (vibrations = 4.8%, smoothing ~= 0.139)
+To avoid too much smoothing with &#39;ei&#39;, suggested max_accel &lt;= 4300 mm/sec^2
+Fitted shaper &#39;2hump_ei&#39; frequency = 52.0 Hz (vibrations = 2.7%, smoothing ~= 0.200)
+To avoid too much smoothing with &#39;2hump_ei&#39;, suggested max_accel &lt;= 3000 mm/sec^2
+Fitted shaper &#39;3hump_ei&#39; frequency = 72.6 Hz (vibrations = 1.4%, smoothing ~= 0.155)
+To avoid too much smoothing with &#39;3hump_ei&#39;, suggested max_accel &lt;= 3900 mm/sec^2
+Recommended shaper is 3hump_ei @ 72.6 Hz
+</code></pre></div>
+
+<p>新的参数与之前的建议比，振动要大一些，但平滑度明显比之前小，允许打印时更高的极限加速度。</p>
+<p>在选择 <code>max_smoothing</code> 参数时，可以使用试错的方法。试试几个不同的值并对比得到的结果。请注意，输入整形器产生的实际平滑效果主要取决于打印机的最低谐振频率：最低谐振的频率越高，平滑效果越小。因此，如果要求脚本找到一个具有不切实际小平滑度的输入整形器配置，它将以增加最低共振频率的振纹为代价（通常，这在打印件中比平滑产生的影响更明显）。因此，一定要仔细检查脚本所报告的预计剩余振动，确保它们不会太高。</p>
+<p>注意，如果为两个轴选择了一个相同的 <code>max_smoothing</code> 值，可以把它存储在 <code>printer.cfg</code> 为</p>
+<div class="highlight"><pre><span></span><code>[resonance_tester]
+accel_chip: ...
+probe_points: ...
+max_smoothing: 0.25  # an example
+</code></pre></div>
+
+<p>如果在将来使用<code>SHAPER_CALIBRATE</code> Klipper命令<a href="#input-shaper-re-calibration">重新运行</a>输入整形器自动调谐，它将使用存储的<code>max_smoothing</code> 值作为参考。</p>
+<h3 id="max_accel">选择 max_accel<a class="headerlink" href="#max_accel" title="Permanent link">&para;</a></h3>
+<p>由于输入整形器会在打印件中产生一些平滑，特别是在高加速时，选择一个不会产生过多平滑的<code>max_accel</code> 依然很重要校准脚本为<code>max_accel</code> 参数提供了一个不应该产生过多平滑的估计值。请注意，由校准脚本显示的<code>max_accel</code> 只是一个理论上的最大值，在这个值上，各自的整形器仍然能够工作而不产生过多的平滑。这决不是建议设置的打印加速度。你的打印机能够承受的最大加速度取决于它的机械性能和所用步进电机的最大扭矩。因此，建议在<code>[printer]</code> 部分设置<code>max_accel</code> 时不要超过X轴和Y轴的估计值，并保守一些。</p>
+<p>或者，按照<a href="Resonance_Compensation.html#selecting-max_accel">这个</a>章节的输入整形器调整指南，打印测试模型，通过实验选择<code>max_accel</code> 参数。</p>
+<p>同样的通知也适用于带有<code>SHAPER_CALIBRATE</code> 命令的输入整形器<a href="#input-shaper-auto-calibration">自动校准</a>：在自动校准后仍需选择正确的<code>max_accel</code> 值，建议的加速度限制将不会被自动应用。</p>
+<p>Keep in mind that the maximum acceleration without too much smoothing depends on the <code>square_corner_velocity</code>. The general recommendation is not to change it from its default value 5.0, and this is the value used by default by the <code>calibrate_shaper.py</code> script. If you did change it though, you should inform the script about it by passing <code>--square_corner_velocity=...</code> parameter, e.g.</p>
+<div class="highlight"><pre><span></span><code>~/klipper/scripts/calibrate_shaper.py /tmp/resonances_x_*.csv -o /tmp/shaper_calibrate_x.png --square_corner_velocity=10.0
+</code></pre></div>
+
+<p>so that it can calculate the maximum acceleration recommendations correctly. Note that the <code>SHAPER_CALIBRATE</code> command already takes the configured <code>square_corner_velocity</code> parameter into account, and there is no need to specify it explicitly.</p>
+<p>如果重新校准一个整形器，并且建议的整形器配置的报告平滑度与你在以前的校准中得到的几乎相同，这个步骤可以被跳过。</p>
+<h3 id="unreliable-measurements-of-resonance-frequencies">Unreliable measurements of resonance frequencies<a class="headerlink" href="#unreliable-measurements-of-resonance-frequencies" title="Permanent link">&para;</a></h3>
+<p>Sometimes the resonance measurements can produce bogus results, leading to the incorrect suggestions for the input shapers. This can be caused by a variety of reasons, including running fans on the toolhead, incorrect position or non-rigid mounting of the accelerometer, or mechanical problems such as loose belts or binding or bumpy axis. Keep in mind that all fans should be disabled for resonance testing, especially the noisy ones, and that the accelerometer should be rigidly mounted on the corresponding moving part (e.g. on the bed itself for the bed slinger, or on the extruder of the printer itself and not the carriage, and some people get better results by mounting the accelerometer on the nozzle itself). As for mechanical problems, the user should inspect if there is any fault that can be fixed with a moving axis (e.g. linear guide rails cleaned up and lubricated and V-slot wheels tension adjusted correctly). If none of that helps, a user may try the other shapers from the produced list besides the one recommended by default.</p>
+<h3 id="_11">自定义测试轴<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<p><code>TEST_RESONANCES</code>命令支持自定义轴。虽然这对输入整形器校准并不真正有用，但它可用于深入研究打印机共振，并检查皮带张力等。</p>
+<p>要检查CoreXY打印机上的皮带张力，请执行</p>
+<div class="highlight"><pre><span></span><code>TEST_RESONANCES AXIS=1,1 OUTPUT=raw_data
+TEST_RESONANCES AXIS=1,-1 OUTPUT=raw_data
+</code></pre></div>
+
+<p>并使用<code>graph_accelerometer.py</code>处理生成的文件，例如.</p>
+<div class="highlight"><pre><span></span><code>~/klipper/scripts/graph_accelerometer.py -c /tmp/raw_data_axis*.csv -o /tmp/resonances.png
+</code></pre></div>
+
+<p>以生成<code>/tmp/resonances.png</code>，对比共振的数据。</p>
+<p>对标准构型的三角洲打印机（A塔~210°，B塔~330°，C塔~90°），执行</p>
+<div class="highlight"><pre><span></span><code>TEST_RESONANCES AXIS=0,1 OUTPUT=raw_data
+TEST_RESONANCES AXIS=-0.866025404,-0.5 OUTPUT=raw_data
+TEST_RESONANCES AXIS=0.866025404,-0.5 OUTPUT=raw_data
+</code></pre></div>
+
+<p>然后使用同样的命令</p>
+<div class="highlight"><pre><span></span><code>~/klipper/scripts/graph_accelerometer.py -c /tmp/raw_data_axis*.csv -o /tmp/resonances.png
+</code></pre></div>
+
+<p>以生成<code>/tmp/resonances.png</code>，对比共振的数据。</p>
+<h2 id="_12">输入整形器自动校准<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<p>除了为输入整形器功能手动选择适当的参数外，还可以直接从Klipper运行输入整形器的自动调谐。通过Octoprint终端运行以下命令：</p>
+<div class="highlight"><pre><span></span><code>SHAPER_CALIBRATE
+</code></pre></div>
+
+<p>这将为两个轴运行完整的测试，并生成用于频率响应和建议的输入整形器的csv输出（默认为<code>/tmp/calibration_data_*.csv</code> ）。在Octoprint中会提示控制台每个输入整形器的建议频率，以及为这台打印机推荐的输入整形器。例如：</p>
+<div class="highlight"><pre><span></span><code>Calculating the best input shaper parameters for y axis
+Fitted shaper &#39;zv&#39; frequency = 39.0 Hz (vibrations = 13.2%, smoothing ~= 0.105)
+To avoid too much smoothing with &#39;zv&#39;, suggested max_accel &lt;= 5900 mm/sec^2
+Fitted shaper &#39;mzv&#39; frequency = 36.8 Hz (vibrations = 1.7%, smoothing ~= 0.150)
+To avoid too much smoothing with &#39;mzv&#39;, suggested max_accel &lt;= 4000 mm/sec^2
+Fitted shaper &#39;ei&#39; frequency = 36.6 Hz (vibrations = 2.2%, smoothing ~= 0.240)
+To avoid too much smoothing with &#39;ei&#39;, suggested max_accel &lt;= 2500 mm/sec^2
+Fitted shaper &#39;2hump_ei&#39; frequency = 48.0 Hz (vibrations = 0.0%, smoothing ~= 0.234)
+To avoid too much smoothing with &#39;2hump_ei&#39;, suggested max_accel &lt;= 2500 mm/sec^2
+Fitted shaper &#39;3hump_ei&#39; frequency = 59.0 Hz (vibrations = 0.0%, smoothing ~= 0.235)
+To avoid too much smoothing with &#39;3hump_ei&#39;, suggested max_accel &lt;= 2500 mm/sec^2
+Recommended shaper_type_y = mzv, shaper_freq_y = 36.8 Hz
+</code></pre></div>
+
+<p>如果认同建议的参数，现在可以执行<code>SAVE_CONFIG</code> 来保存设置并重新启动Klipper。 请注意，这不会更新<code>[printer]</code> 分段中的<code>max_accel</code>值。应该按照<a href="#selecting-max_accel">选择max_accel</a>章节中的注意事项手动更新它。</p>
+<p>如果你的打印机热床水平移动，可以选择测试的轴，这样就可以在测试之间改变加速度计的安装点（默认情况下，测试会同时对两个轴一起进行）：</p>
+<div class="highlight"><pre><span></span><code>SHAPER_CALIBRATE AXIS=Y
+</code></pre></div>
+
+<p>可以在校准每个轴之后执行<code>SAVE_CONFIG</code>。</p>
+<p>然而，如果同时连接了两个加速度计，只需要运行<code>SHAPER_CALIBRATE</code> ，而不指定轴，就可以一次性校准两个轴的输入整形器。</p>
+<h3 id="_13">重新校准输入整形器<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h3>
+<p><code>SHAPER_CALIBRATE</code> 命令也可以用来在将来重新校准输入整形器，特别是当打印机发生了一些可能影响其运动学的变化时。可以使用<code>SHAPER_CALIBRATE</code> 命令重新进行全面校准，或者通过提供<code>AXIS=</code> 参数将自动校准限制在一个轴上，例如</p>
+<div class="highlight"><pre><span></span><code>SHAPER_CALIBRATE AXIS=X
+</code></pre></div>
+
+<p><strong>Warning!</strong> It is not advisable to run the shaper auto-calibration very frequently (e.g. before every print, or every day). In order to determine resonance frequencies, auto-calibration creates intensive vibrations on each of the axes. Generally, 3D printers are not designed to withstand a prolonged exposure to vibrations near the resonance frequencies. Doing so may increase wear of the printer components and reduce their lifespan. There is also an increased risk of some parts unscrewing or becoming loose. Always check that all parts of the printer (including the ones that may normally not move) are securely fixed in place after each auto-tuning.</p>
+<p>此外，由于测量中的一些噪音，每次校准得到的调谐结果会略有不同。不过，这些噪音一般不会对打印质量产生太大影响。然而，我们仍然建议仔细检查建议的参数，并在使用前打印一些测试件以确认它们是正确的。</p>
+<h2 id="_14">离线处理加速计数据<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h2>
+<p>可以生成原始的加速度计数据并离线处理（例如在一台电脑上），以查找共振频率为例，在Octoprint的终端内运行如下命令：</p>
+<div class="highlight"><pre><span></span><code>SET_INPUT_SHAPER SHAPER_FREQ_X=0 SHAPER_FREQ_Y=0
+TEST_RESONANCES AXIS=X OUTPUT=raw_data
+</code></pre></div>
+
+<p>忽略<code>SET_INPUT_SHAPER</code>命令的任何错误。对<code>TEST_RESONANCES</code>指定测试的方向。原始数据保存至<code>/tmp</code>目录内。</p>
+<p>在一些正常的打印机活动中，也可以通过运行命令 <code>ACCELEROMETER_MEASURE</code>两次来获得原始数据——首先是开始测量，然后是停止测量并写入输出文件。有关更多详细信息，请参阅<a href="G-Codes.html#adxl345">G-Codes</a>。</p>
+<p>这些数据可在以后通过<code>scripts/graph_accelerometer.py</code>和scripts/calibrate_shaper.py`脚本进行处理，在不同的工作模式下，两种脚本支持一个或多个原始数据csv文件作为输入。graph_accelerometer.py支持以下几种模式：</p>
+<ul>
+<li>绘制原始加速度数据图（使用<code>-r</code>参数），仅支持一个输入;</li>
+<li>绘制频率响应图（无需额外参数），如果指定了多个输入文件，将计算他们的平均值;</li>
+<li>在多个输入之间比较频率响应曲线（使用<code>-c</code>参数）；通过<code>-ax，</code>-ay<code>或</code>-az`参数，可以额外指定哪个轴参与比较（在未指定时将计算所有轴振动的总和）;</li>
+<li>绘制频谱图(使用<code>-s</code>参数)，只支持1个输入；您可以通过<code>-a x</code>、<code>-a y</code>或<code>-a z</code>参数指定考虑哪个加速度计轴(如果不指定，则取所有轴的振动总和)。</li>
+</ul>
+<p>请注意，graph_accelerometer.py脚本仅支持RAW_DATA*.csv文件，不支持共振*.csv或CALIBRATION_DATA*.csv文件。</p>
+<p>例如，</p>
+<div class="highlight"><pre><span></span><code>~/klipper/scripts/graph_accelerometer.py /tmp/raw_data_x_*.csv -o /tmp/resonances_x.png -c -a z
+</code></pre></div>
+
+<p>将绘制Z轴的几个<code>/tmp/raw_data_x_*.csv</code>文件与<code>/tMP/Resonance_x.png</code>文件的比较。</p>
+<p>Shaper_calbrate.py脚本接受1个或多个输入，可以运行输入整形器的自动调优，并建议适合所有提供的输入的最佳参数。它会将建议的参数打印到控制台，如果提供了<code>-o output.png</code>参数，则可以额外生成图表；如果指定了<code>-c output.csv</code>参数，则可以额外生成CSV文件。</p>
+<p>如果运行输入整形器的一些高级调优，向shaper_calbrate.py脚本提供几个输入可能会很有用，例如：</p>
+<ul>
+<li>在第一次将加速度计连接到刀头、第二次将加速度表连接到床的床甩油机打印机上，对单个轴运行两次<code>TEST_RESONANCES AXIS=X OUTPUT=raw_data</code>（和<code>Y</code>轴），以检测轴的交叉共振，并尝试用输入整形器消除它们。</li>
+<li>在具有玻璃床和磁性表面（较轻）的甩床器上运行两次<code>TEST_RESONANCES AXIS=Y OUTPUT=raw_data</code>，以找到适用于任何打印表面配置的输入整形器参数。</li>
+<li>组合来自多个测试点的共振数据。</li>
+<li>组合来自2个轴的共振数据(例如，在床吊杆打印机上配置X轴INPUT_SHAPER从X轴和Y轴共振，以消除<em>床</em>的振动，以防喷嘴在X轴方向上移动时‘捕捉’到印刷品)。</li>
+</ul>
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            回到页面顶部
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="页脚">
+      
+        
+        <a href="Resonance_Compensation.html" class="md-footer__link md-footer__link--prev" aria-label="上一页: 共振补偿" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              共振补偿
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="Pressure_Advance.html" class="md-footer__link md-footer__link--next" aria-label="下一页: 压力提前" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              压力提前
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.top", "search.suggest", "search.highlight", "search.share"], "translations": {"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "search": "assets/javascripts/workers/search.0bbba5b5.min.js"}</script>
+    
+    
+      <script src="assets/javascripts/bundle.e1a181d9.min.js"></script>
+      
+    
+  </body>
+</html>

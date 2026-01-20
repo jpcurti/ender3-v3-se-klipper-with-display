@@ -1,0 +1,2354 @@
+
+<!doctype html>
+<html lang="zh-Hant" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.2.4, mkdocs-material-8.1.3">
+    
+    
+      
+        <title>床網 - Klipper 文檔</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.edf004c2.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.e6a45f82.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="_klipper3d/css/extra.css">
+    
+    <script>__md_scope=new URL(".",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+
+  <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-VEN1PGNQL4"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&gtag("event","search",{search_term:this.value})}),"undefined"!=typeof location$&&location$.subscribe(function(e){gtag("config","G-VEN1PGNQL4",{page_path:e.pathname})})})</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VEN1PGNQL4"></script>
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="blue">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳轉至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="Klipper 文檔" class="md-header__button md-logo" aria-label="Klipper 文檔" data-md-component="logo">
+      
+  <img src="img/klipper.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Klipper 文檔
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              床網
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9v1z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="grey" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+      <div class="md-header__option">
+        <div class="md-select">
+          
+          <button class="md-header__button md-icon" aria-label="Select language">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2m-5.15 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56M14.34 14H9.66c-.1-.66-.16-1.32-.16-2 0-.68.06-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2M12 19.96c-.83-1.2-1.5-2.53-1.91-3.96h3.82c-.41 1.43-1.08 2.76-1.91 3.96M8 8H5.08A7.923 7.923 0 0 1 9.4 4.44C8.8 5.55 8.35 6.75 8 8m-2.92 8H8c.35 1.25.8 2.45 1.4 3.56A8.008 8.008 0 0 1 5.08 16m-.82-2C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2M12 4.03c.83 1.2 1.5 2.54 1.91 3.97h-3.82c.41-1.43 1.08-2.77 1.91-3.97M18.92 8h-2.95a15.65 15.65 0 0 0-1.38-3.56c1.84.63 3.37 1.9 4.33 3.56M12 2C6.47 2 2 6.5 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2z"/></svg>
+          </button>
+          <div class="md-select__inner">
+            <ul class="md-select__list">
+              
+                <li class="md-select__item">
+                  <a href="/" hreflang="en" class="md-select__link">
+                    English
+                  </a>
+                </li>
+                
+                <li class="md-select__item">
+                  <a href="/zh/" hreflang="zh" class="md-select__link">
+                    简体中文
+                  </a>
+                </li>
+                
+                <li class="md-select__item">
+                  <a href="/zh-Hant/" hreflang="zh-Hant" class="md-select__link">
+                    繁體中文
+                  </a>
+                </li>
+                
+                <li class="md-select__item">
+                  <a href="/hu/" hreflang="hu" class="md-select__link">
+                    Magyar
+                  </a>
+                </li>
+                
+                <li class="md-select__item">
+                  <a href="/it/" hreflang="it" class="md-select__link">
+                    Italiano
+                  </a>
+                </li>
+                
+                <li class="md-select__item">
+                  <a href="/fr/" hreflang="fr" class="md-select__link">
+                    Français
+                  </a>
+                </li>
+                
+            </ul>
+          </div>
+        </div>
+      </div>
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜尋" placeholder="搜尋" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜尋引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Klipper3d/klipper/" title="前往倉庫" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Klipper3d/klipper
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="Klipper 文檔" class="md-nav__button md-logo" aria-label="Klipper 文檔" data-md-component="logo">
+      
+  <img src="img/klipper.svg" alt="logo">
+
+    </a>
+    Klipper 文檔
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Klipper3d/klipper/" title="前往倉庫" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Klipper3d/klipper
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Overview.html" class="md-nav__link">
+        概述
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Features.html" class="md-nav__link">
+        功能
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="FAQ.html" class="md-nav__link">
+        常見問題
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Releases.html" class="md-nav__link">
+        版本發佈
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Config_Changes.html" class="md-nav__link">
+        配置變更
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Contact.html" class="md-nav__link">
+        聯繫方式
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7">
+          安裝和配置
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="安裝和配置" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          安裝和配置
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_1" type="checkbox" id="__nav_7_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_1">
+          Installation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Installation" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_1">
+          <span class="md-nav__icon md-icon"></span>
+          Installation
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Installation.html" class="md-nav__link">
+        安裝
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="OctoPrint.html" class="md-nav__link">
+        OctoPrint for Klipper
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2" type="checkbox" id="__nav_7_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_2">
+          配置參考
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="配置參考" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          配置參考
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Config_Reference.html" class="md-nav__link">
+        配置參考
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Rotation_Distance.html" class="md-nav__link">
+        旋轉距離
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Config_checks.html" class="md-nav__link">
+        配置檢查
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_4" type="checkbox" id="__nav_7_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_4">
+          印床水平
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="印床水平" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_4">
+          <span class="md-nav__icon md-icon"></span>
+          印床水平
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Bed_Level.html" class="md-nav__link">
+        列印床調平
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Delta_Calibrate.html" class="md-nav__link">
+        三角校正
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Probe_Calibrate.html" class="md-nav__link">
+        探針校準
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="BLTouch.html" class="md-nav__link">
+        BL-Touch
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Manual_Level.html" class="md-nav__link">
+        手動調平
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          床網
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Bed_Mesh.html" class="md-nav__link md-nav__link--active">
+        床網
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目錄">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    基本配置
+  </a>
+  
+    <nav class="md-nav" aria-label="基本配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    矩形床
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    圓形床
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    高級配置
+  </a>
+  
+    <nav class="md-nav" aria-label="高級配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    網格插值
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    移動拆分
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    網格淡出
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-the-zero-reference-position" class="md-nav__link">
+    Configuring the zero reference position
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuring the zero reference position">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-deprecated-relative_reference_index" class="md-nav__link">
+    The deprecated relative_reference_index
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    故障區域
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adaptive-meshes" class="md-nav__link">
+    Adaptive Meshes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#surface-scans" class="md-nav__link">
+    Surface Scans
+  </a>
+  
+    <nav class="md-nav" aria-label="Surface Scans">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scan-height" class="md-nav__link">
+    Scan Height
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rapid-continuous-scanning" class="md-nav__link">
+    Rapid (Continuous) Scanning
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#g" class="md-nav__link">
+    床網 G程式碼
+  </a>
+  
+    <nav class="md-nav" aria-label="床網 G程式碼">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    校準
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    配置
+  </a>
+  
+    <nav class="md-nav" aria-label="配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#loading-the-default-profile" class="md-nav__link">
+    Loading the default profile
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    輸出
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    清除網格狀態
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xy" class="md-nav__link">
+    應用X/Y偏移量
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bed-mesh-webhooks-apis" class="md-nav__link">
+    Bed Mesh Webhooks APIs
+  </a>
+  
+    <nav class="md-nav" aria-label="Bed Mesh Webhooks APIs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dumping-mesh-data" class="md-nav__link">
+    Dumping mesh data
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualization-and-analysis" class="md-nav__link">
+    Visualization and analysis
+  </a>
+  
+    <nav class="md-nav" aria-label="Visualization and analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pre-requisites" class="md-nav__link">
+    Pre-requisites
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plotting-mesh-data" class="md-nav__link">
+    Plotting Mesh data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bed-mesh-analysis" class="md-nav__link">
+    Bed Mesh Analysis
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#save-mesh-data-to-a-file" class="md-nav__link">
+    Save mesh data to a file
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Endstop_Phase.html" class="md-nav__link">
+        限位相位
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Axis_Twist_Compensation.html" class="md-nav__link">
+        Axis Twist Compensation
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_5" type="checkbox" id="__nav_7_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_5">
+          共振補償
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="共振補償" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_5">
+          <span class="md-nav__icon md-icon"></span>
+          共振補償
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Resonance_Compensation.html" class="md-nav__link">
+        共振補償
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Measuring_Resonances.html" class="md-nav__link">
+        共振值測量
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Pressure_Advance.html" class="md-nav__link">
+        Pressure advance
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="G-Codes.html" class="md-nav__link">
+        G-Codes
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_8" type="checkbox" id="__nav_7_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7_8">
+          命令模板
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="命令模板" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_8">
+          <span class="md-nav__icon md-icon"></span>
+          命令模板
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Command_Templates.html" class="md-nav__link">
+        命令模板
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Status_Reference.html" class="md-nav__link">
+        狀態參考
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="TMC_Drivers.html" class="md-nav__link">
+        TMC 驅動器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Multi_MCU_Homing.html" class="md-nav__link">
+        複數微控制器歸零與探高
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Slicers.html" class="md-nav__link">
+        切片軟體
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Skew_Correction.html" class="md-nav__link">
+        偏斜校正
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Exclude_Object.html" class="md-nav__link">
+        Exclude Objects
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Using_PWM_Tools.html" class="md-nav__link">
+        使用 PWM 工具
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_8">
+          開發者文檔
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="開發者文檔" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          開發者文檔
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Code_Overview.html" class="md-nav__link">
+        程式碼總覽
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Kinematics.html" class="md-nav__link">
+        運動學
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Protocol.html" class="md-nav__link">
+        協議
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="API_Server.html" class="md-nav__link">
+        API 伺服器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="MCU_Commands.html" class="md-nav__link">
+        MCU命令
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="CANBUS_protocol.html" class="md-nav__link">
+        CANBUS 協議
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Debugging.html" class="md-nav__link">
+        除錯
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Benchmarks.html" class="md-nav__link">
+        基準測試
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="CONTRIBUTING.html" class="md-nav__link">
+        為 Klipper 做貢獻
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Packaging.html" class="md-nav__link">
+        打包 Klipper
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_9">
+          設備特定文件
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="設備特定文件" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          設備特定文件
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Example_Configs.html" class="md-nav__link">
+        配置示例
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="SDCard_Updates.html" class="md-nav__link">
+        通過SD卡更新
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="RPi_microcontroller.html" class="md-nav__link">
+        RPi 微控制器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Beaglebone.html" class="md-nav__link">
+        Beaglebone
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Bootloaders.html" class="md-nav__link">
+        底層載入程式
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Bootloader_Entry.html" class="md-nav__link">
+        Bootloader Entry
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="CANBUS.html" class="md-nav__link">
+        CAN 匯流排
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="CANBUS_Troubleshooting.html" class="md-nav__link">
+        CANBUS Troubleshooting
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="TSL1401CL_Filament_Width_Sensor.html" class="md-nav__link">
+        TSL1401CL 耗材寬度感測器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Hall_Filament_Width_Sensor.html" class="md-nav__link">
+        霍爾耗材線徑感測器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Eddy_Probe.html" class="md-nav__link">
+        渦電流電感式探針
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Load_Cell.html" class="md-nav__link">
+        Load Cells
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Sponsors.html" class="md-nav__link">
+        贊助商
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目錄">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目錄
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    基本配置
+  </a>
+  
+    <nav class="md-nav" aria-label="基本配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    矩形床
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    圓形床
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    高級配置
+  </a>
+  
+    <nav class="md-nav" aria-label="高級配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    網格插值
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    移動拆分
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    網格淡出
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-the-zero-reference-position" class="md-nav__link">
+    Configuring the zero reference position
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuring the zero reference position">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-deprecated-relative_reference_index" class="md-nav__link">
+    The deprecated relative_reference_index
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    故障區域
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adaptive-meshes" class="md-nav__link">
+    Adaptive Meshes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#surface-scans" class="md-nav__link">
+    Surface Scans
+  </a>
+  
+    <nav class="md-nav" aria-label="Surface Scans">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scan-height" class="md-nav__link">
+    Scan Height
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rapid-continuous-scanning" class="md-nav__link">
+    Rapid (Continuous) Scanning
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#g" class="md-nav__link">
+    床網 G程式碼
+  </a>
+  
+    <nav class="md-nav" aria-label="床網 G程式碼">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    校準
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    配置
+  </a>
+  
+    <nav class="md-nav" aria-label="配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#loading-the-default-profile" class="md-nav__link">
+    Loading the default profile
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    輸出
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    清除網格狀態
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xy" class="md-nav__link">
+    應用X/Y偏移量
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bed-mesh-webhooks-apis" class="md-nav__link">
+    Bed Mesh Webhooks APIs
+  </a>
+  
+    <nav class="md-nav" aria-label="Bed Mesh Webhooks APIs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dumping-mesh-data" class="md-nav__link">
+    Dumping mesh data
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualization-and-analysis" class="md-nav__link">
+    Visualization and analysis
+  </a>
+  
+    <nav class="md-nav" aria-label="Visualization and analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pre-requisites" class="md-nav__link">
+    Pre-requisites
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plotting-mesh-data" class="md-nav__link">
+    Plotting Mesh data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bed-mesh-analysis" class="md-nav__link">
+    Bed Mesh Analysis
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#save-mesh-data-to-a-file" class="md-nav__link">
+    Save mesh data to a file
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+<a href="https://github.com/Klipper3d/klipper/blob/master/docs/Bed_Mesh.md" title="編輯此頁" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+<h1 id="_1">床網<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>The Bed Mesh module may be used to compensate for bed surface irregularities to achieve a better first layer across the entire bed. It should be noted that software based correction will not achieve perfect results, it can only approximate the shape of the bed. Bed Mesh also cannot compensate for mechanical and electrical issues. If an axis is skewed or a probe is not accurate then the bed_mesh module will not receive accurate results from the probing process.</p>
+<p>在進行網格校準之前，需要先校準探針的 Z 偏移。如果使用限位開關進行Z軸定位，也需要對其進行校準。請參閱<a href="Probe_Calibrate.html">探針校準</a>和<a href="Manual_Level.html">手動調平</a>中的 Z_ENDSTOP_CALIBRATE 獲取更多資訊。</p>
+<h2 id="_2">基本配置<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="_3">矩形床<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>此示例假定印表機具有 250 mm x 220 mm 矩形床和一個 x 偏移為 24 mm和 y 偏移為 5 mm的探針。</p>
+<div class="highlight"><pre><span></span><code>[bed_mesh]
+speed: 120
+horizontal_move_z: 5
+mesh_min: 35, 6
+mesh_max: 240, 198
+probe_count: 5, 3
+</code></pre></div>
+
+<ul>
+<li><code>speed: 120</code> <em>預設值：50</em> 探針在兩個點之間移動的速度。</li>
+<li><code>horizontal_move_z: 5</code> <em>預設值：5</em> 探針前往下一個點之前Z需要抬升的高度。</li>
+<li><code>mesh_min: 35,6</code> <em>（必須存在）</em>第一個探測的座標，距離原點最近。該座標就是探針所在的位置。</li>
+<li><code>mesh_max: 240, 198</code> <em>Required</em> The probed coordinate farthest from the origin. This is not necessarily the last point probed, as the probing process occurs in a zig-zag fashion. As with <code>mesh_min</code>, this coordinate is relative to the probe's location.</li>
+<li><code>probe_count: 5, 3</code> <em>預設值：3, 3</em> 每個軸上要探測的點數，指定為 X, Y 整數值。 在本示例中，將沿 X 軸探測 5 個點，沿 Y 軸探測 3 個點，總共探測 15 個點。 請注意，如果您想要一個方形網格，例如 3x3，可以將指定其為一個整數值，比如 <code>probe_count: 3</code>。 請注意，網格需要沿每個軸的最小 probe_count 為3。</li>
+</ul>
+<p>下圖演示瞭如何使用 <code>mesh_min</code>、<code>mesh_max</code> 和 <code>probe_count</code> 選項來產生探測點。 箭頭表示探測過程的運動方向，從「mesh_min」開始。 圖中所示，當探針位於「mesh_min」時，噴嘴將位於 (11, 1)，當探針位於「mesh_max」時，噴嘴將位於 (206, 193)。</p>
+<p><img alt="矩形網床基本配置" src="img/bedmesh_rect_basic.svg" /></p>
+<h3 id="_4">圓形床<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>本示例假設印表機配備的圓床半徑為 100 mm。 我們將使用與矩形網床示例相同的探針偏移來演示，X 偏移為 24 mm，Y 偏移為 5 mm。</p>
+<div class="highlight"><pre><span></span><code>[bed_mesh]
+speed: 120
+horizontal_move_z: 5
+mesh_radius: 75
+mesh_origin: 0, 0
+round_probe_count: 5
+</code></pre></div>
+
+<ul>
+<li><code>mesh_radius: 75</code> <em>必須配置</em> 探測網格範圍的半徑（以毫米為單位），相對於 <code>mesh_origin</code>。 請注意，探針的偏移會限制網格半徑的大小。 在此示例中，大於 76 mm的半徑會將列印頭移動到印表機的範圍之外。</li>
+<li><code>mesh_origin: 0, 0</code> <em>預設值：0, 0</em> 探測網格的中心點。 該座標相對於探針的位置。 雖然預設值為 0,0，但如果希望探測床的邊角可以修改該值。 請參閱下圖。</li>
+<li><code>round_probe_count: 5</code> <em>預設值： 5</em> 這是一個整數值，用於限制沿 X 軸和 Y 軸的最大探測點數。 「最大」是指沿網格原點探測的點數。 該值必須是奇數，因為需要探測網格的中心。</li>
+</ul>
+<p>The illustration below shows how the probed points are generated. As you can see, setting the <code>mesh_origin</code> to (-10, 0) allows us to specify a larger mesh radius of 85.</p>
+<p><img alt="圓形網床基本配置" src="img/bedmesh_round_basic.svg" /></p>
+<h2 id="_5">高級配置<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>下面詳細解釋了更高級的配置選項。 每個示例都將建立在上面顯示的基本矩形床配置之上。 每個高級選項都以相同的方式應用於圓床。</p>
+<h3 id="_6">網格插值<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>While its possible to sample the probed matrix directly using simple bi-linear interpolation to determine the Z-Values between probed points, it is often useful to interpolate extra points using more advanced interpolation algorithms to increase mesh density. These algorithms add curvature to the mesh, attempting to simulate the material properties of the bed. Bed Mesh offers lagrange and bicubic interpolation to accomplish this.</p>
+<div class="highlight"><pre><span></span><code>[bed_mesh]
+speed: 120
+horizontal_move_z: 5
+mesh_min: 35, 6
+mesh_max: 240, 198
+probe_count: 5, 3
+mesh_pps: 2, 3
+algorithm: bicubic
+bicubic_tension: 0.2
+</code></pre></div>
+
+<ul>
+<li><code>mesh_pps: 2,3</code> <em>預設值：2,2</em><code>mesh_pps</code> 選項是每段的網格點數的簡寫。 此選項指定沿 x 軸和 y 軸為每個線段插值的點數。 「段」被視為每個探測點之間的間隔。 與 <code>probe_count</code> 一樣，<code>mesh_pps</code> 可以是 X, Y 整數對，也可以是同時應用於兩個軸的單個整數。 在此示例中，沿 X 軸有 4 個線段，沿 Y 軸有 2 個線段。 這計算為沿 X 的 8 個插值點，沿 Y 的 6 個插值點，從而產生 13x8 網格。 請注意，如果 mesh_pps 設定為 0，則禁用網格插值，並且將直接對探測網格進行採樣。</li>
+<li><code>algorithm: lagrange</code> <em>預設值：lagrange</em> 用於插入網格的演算法。 可能是 <code>lagrange</code> or <code>bicubic</code>。 拉格朗日插值最多為 6 個探測點，因為大量樣本容易發生振盪。 雙三次插值要求沿每個軸至少有 4 個探測點，如果指定的點少於 4 個，則強制拉格朗日採樣。 如果 <code>mesh_pps</code> 設定為 0，則該值將被忽略，因為沒有進行網格插值。</li>
+<li><code>bicubic_tension: 0.2</code> <em>預設值：0.2</em> 雙三次插值的張力值。如果<code>algorithm</code> 選項設定為雙三次，則可以指定張力值。 張力越高，內插的斜率越大。 調整時要小心，因為較高的值也會產生更多的過沖，這將導致插值高於或低於探測點。</li>
+</ul>
+<p>下圖顯示瞭如何使用上述選項產生網格插值。</p>
+<p><img alt="網床插值" src="img/bedmesh_interpolated.svg" /></p>
+<h3 id="_7">移動拆分<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p>床網的工作原理是攔截 G 程式碼移動命令並對其 Z 座標進行變換。長的移動必須被分割成較小的移動以正確地遵循床的形狀。下面的選項可以控制分割的行為。</p>
+<div class="highlight"><pre><span></span><code>[bed_mesh]
+speed: 120
+horizontal_move_z: 5
+mesh_min: 35, 6
+mesh_max: 240, 198
+probe_count: 5, 3
+move_check_distance: 5
+split_delta_z: .025
+</code></pre></div>
+
+<ul>
+<li><code>move_check_distance: 5</code> <em>預設值：5</em> 在執行拆分之前檢查 Z 中需要變化的最小距離。 在此示例中，演算法將遍歷超過 5 毫米的移動。 每 5mm 將查詢一次網格的Z ，並將其與前一次移動的 Z 值進行比較。 如果三角洲滿足 <code>split_delta_z</code> 設定的閾值，則移動將被拆分並繼續遍歷。 重複此過程，直到到達移動結束處，在此將應用最終調整。 比 <code>move_check_distance</code> 短的移動將正確的 Z 調整直接應用於移動，無需遍歷或拆分。</li>
+<li><code>split_delta_z: .025</code> <em>預設值：.025</em> 如上所述，這是觸發移動拆分所需的最小偏差。 在上面的示例中，任何偏差為 +/- .025 mm的 Z 值都將觸發拆分。</li>
+</ul>
+<p>Generally the default values for these options are sufficient, in fact the default value of 5mm for the <code>move_check_distance</code> may be overkill. However an advanced user may wish to experiment with these options in an effort to squeeze out the optimal first layer.</p>
+<h3 id="_8">網格淡出<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p>啟用「網格淡出」后，Z 軸的調整將在配置中定義的距離範圍內逐步消失。 這是通過對層高進行小幅調整來實現的，根據床的形狀增加或減少。 網格淡出完成後，不再使用 Z 調整，使列印的表面是平坦的而不是床彎曲的形狀。 網格淡出也可能會產生一些不良表現，如果網格淡出過快，可能會導致列印件上出現可見的瑕疵（偽影）。 此外，如果您的床明顯變形，網格淡出會縮小或拉伸列印件的 Z 高度。 因此，預設情況下禁用網格淡出。</p>
+<div class="highlight"><pre><span></span><code>[bed_mesh]
+speed: 120
+horizontal_move_z: 5
+mesh_min: 35, 6
+mesh_max: 240, 198
+probe_count: 5, 3
+fade_start: 1
+fade_end: 10
+fade_target: 0
+</code></pre></div>
+
+<ul>
+<li><code>fade_start: 1</code> <em>預設值：1</em> 開始網格淡出的值，在設定的fade_start值之後逐步停止調整Z的高度。 建議在列印幾層之後再開始淡出層高。</li>
+<li><code>fade_end: 10</code> <em>預設值：0</em> 網格淡出完成的 Z 高度。 如果此值低於<code>fade_start</code>，則禁用網格淡出。 該值可以根據列印表面的彎曲程度進行調整。 明顯彎曲的表面應該在將網格淡出的距離長。 接近平坦的表面可能能夠降低該值以更快地逐步淘汰。 如果對 <code>fade_start</code> 使用預設值 1，則 10mm 是一個合理的值。</li>
+<li><code>fade_target: 0</code> <em>Default Value: The average Z value of the mesh</em> The <code>fade_target</code> can be thought of as an additional Z offset applied to the entire bed after fade completes. Generally speaking we would like this value to be 0, however there are circumstances where it should not be. For example, lets assume your homing position on the bed is an outlier, its .2 mm lower than the average probed height of the bed. If the <code>fade_target</code> is 0, fade will shrink the print by an average of .2 mm across the bed. By setting the <code>fade_target</code> to .2, the homed area will expand by .2 mm, however, the rest of the bed will be accurately sized. Generally its a good idea to leave <code>fade_target</code> out of the configuration so the average height of the mesh is used, however it may be desirable to manually adjust the fade target if one wants to print on a specific portion of the bed.</li>
+</ul>
+<h3 id="configuring-the-zero-reference-position">Configuring the zero reference position<a class="headerlink" href="#configuring-the-zero-reference-position" title="Permanent link">&para;</a></h3>
+<p>Many probes are susceptible to "drift", ie: inaccuracies in probing introduced by heat or interference. This can make calculating the probe's z-offset challenging, particularly at different bed temperatures. As such, some printers use an endstop for homing the Z axis and a probe for calibrating the mesh. In this configuration it is possible offset the mesh so that the (X, Y) <code>reference position</code> applies zero adjustment. The <code>reference postion</code> should be the location on the bed where a <a href="Manual_Level.html#calibrating-a-z-endstop">Z_ENDSTOP_CALIBRATE</a> paper test is performed. The bed_mesh module provides the <code>zero_reference_position</code> option for specifying this coordinate:</p>
+<div class="highlight"><pre><span></span><code>[bed_mesh]
+speed: 120
+horizontal_move_z: 5
+mesh_min: 35, 6
+mesh_max: 240, 198
+zero_reference_position: 125, 110
+probe_count: 5, 3
+</code></pre></div>
+
+<ul>
+<li><code>zero_reference_position:</code> <em>Default Value: None (disabled)</em> The <code>zero_reference_position</code> expects an (X, Y) coordinate matching that of the <code>reference position</code> described above. If the coordinate lies within the mesh then the mesh will be offset so the reference position applies zero adjustment. If the coordinate lies outside of the mesh then the coordinate will be probed after calibration, with the resulting z-value used as the z-offset. Note that this coordinate must NOT be in a location specified as a <code>faulty_region</code> if a probe is necessary.</li>
+</ul>
+<h4 id="the-deprecated-relative_reference_index">The deprecated relative_reference_index<a class="headerlink" href="#the-deprecated-relative_reference_index" title="Permanent link">&para;</a></h4>
+<p>Existing configurations using the <code>relative_reference_index</code> option must be updated to use the <code>zero_reference_position</code>. The response to the <a href="#output">BED_MESH_OUTPUT PGP=1</a> gcode command will include the (X, Y) coordinate associated with the index; this position may be used as the value for the <code>zero_reference_position</code>. The output will look similar to the following:</p>
+<div class="highlight"><pre><span></span><code>// bed_mesh: generated points
+// Index | Tool Adjusted | Probe
+// 0 | (1.0, 1.0) | (24.0, 6.0)
+// 1 | (36.7, 1.0) | (59.7, 6.0)
+// 2 | (72.3, 1.0) | (95.3, 6.0)
+// 3 | (108.0, 1.0) | (131.0, 6.0)
+... (additional generated points)
+// bed_mesh: relative_reference_index 24 is (131.5, 108.0)
+</code></pre></div>
+
+<p><em>Note: The above output is also printed in <code>klippy.log</code> during initialization.</em></p>
+<p>Using the example above we see that the <code>relative_reference_index</code> is printed along with its coordinate. Thus the <code>zero_reference_position</code> is <code>131.5, 108</code>.</p>
+<h3 id="_9">故障區域<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p>由於特定位置的「故障」，熱床的某些區域在探測時可能會報告不準確的結果。 最好的例子是帶有用彈簧鋼板的磁鐵熱床。 這些磁鐵處和周圍的磁場可能干擾探針觸發的高度，從而導致網格無法準確表示這些位置的表面。 <strong>注意：不要與探頭位置偏差導致探測結果不準確的結果混淆。</strong></p>
+<p>可以配置 <code>faulty_region</code> 選項來避免這種影響。 如果產生的點位於故障區域內，熱床網格將嘗試在該區域的邊界處探測最多 4 個點。 這些探測的平均值將插入網床中作為產生的 (X, Y) 座標處的 Z 值。</p>
+<div class="highlight"><pre><span></span><code>[bed_mesh]
+speed: 120
+horizontal_move_z: 5
+mesh_min: 35, 6
+mesh_max: 240, 198
+probe_count: 5, 3
+faulty_region_1_min: 130.0, 0.0
+faulty_region_1_max: 145.0, 40.0
+faulty_region_2_min: 225.0, 0.0
+faulty_region_2_max: 250.0, 25.0
+faulty_region_3_min: 165.0, 95.0
+faulty_region_3_max: 205.0, 110.0
+faulty_region_4_min: 30.0, 170.0
+faulty_region_4_max: 45.0, 210.0
+</code></pre></div>
+
+<ul>
+<li><code>faulty_region_{1...99}_min</code> <code>faulty_region_{1...99}_max</code> <em>預設值：None （無）(disabled（禁用）)</em> 故障區域的定義方式類似床網本身，必須為每個區域指定最小和最大（X, Y）座標。一個故障區域可以延伸到網格之外，但是產生的替代探測點總是在網格的邊界內。兩個區域不可以重疊。</li>
+</ul>
+<p>下面的圖片說明了當一個產生的探測點位於一個故障區域內時，如何產生替代探測點。所顯示的區域與上述樣本配置中的區域一致。替代點和它們的座標以綠色標識。</p>
+<p><img alt="bedmesh_interpolated" src="img/bedmesh_faulty_regions.svg" /></p>
+<h3 id="adaptive-meshes">Adaptive Meshes<a class="headerlink" href="#adaptive-meshes" title="Permanent link">&para;</a></h3>
+<p>Adaptive bed meshing is a way to speed up the bed mesh generation by only probing the area of the bed used by the objects being printed. When used, the method will automatically adjust the mesh parameters based on the area occupied by the defined print objects.</p>
+<p>The adapted mesh area will be computed from the area defined by the boundaries of all the defined print objects so it covers every object, including any margins defined in the configuration. After the area is computed, the number of probe points will be scaled down based on the ratio of the default mesh area and the adapted mesh area. To illustrate this consider the following example:</p>
+<p>For a 150mmx150mm bed with <code>mesh_min</code> set to <code>25,25</code> and <code>mesh_max</code> set to <code>125,125</code>, the default mesh area is a 100mmx100mm square. An adapted mesh area of <code>50,50</code> means a ratio of <code>0.5x0.5</code> between the adapted area and default mesh area.</p>
+<p>If the <code>bed_mesh</code> configuration specified <code>probe_count</code> as <code>7x7</code>, the adapted bed mesh will use 4x4 probe points (7 * 0.5 rounded up).</p>
+<p><img alt="adaptive_bedmesh" src="img/adaptive_bed_mesh.svg" /></p>
+<div class="highlight"><pre><span></span><code>[bed_mesh]
+speed: 120
+horizontal_move_z: 5
+mesh_min: 35, 6
+mesh_max: 240, 198
+probe_count: 5, 3
+adaptive_margin: 5
+</code></pre></div>
+
+<ul>
+<li>
+<p><code>adaptive_margin</code>  <em>Default Value: 0</em>  Margin (in mm) to add around the area of the bed used by the defined objects. The diagram below shows the adapted bed mesh area with an <code>adaptive_margin</code> of 5mm. The adapted mesh area (area in green) is computed as the used bed area (area in blue) plus the defined margin.</p>
+<p><img alt="adaptive_bedmesh_margin" src="img/adaptive_bed_mesh_margin.svg" /></p>
+</li>
+</ul>
+<p>By nature, adaptive bed meshes use the objects defined by the Gcode file being printed. Therefore, it is expected that each Gcode file will generate a mesh that probes a different area of the print bed. Therefore, adapted bed meshes should not be re-used. The expectation is that a new mesh will be generated for each print if adaptive meshing is used.</p>
+<p>It is also important to consider that adaptive bed meshing is best used on machines that can normally probe the entire bed and achieve a maximum variance less than or equal to 1 layer height. Machines with mechanical issues that a full bed mesh normally compensates for may have undesirable results when attempting print moves <strong>outside</strong> of the probed area. If a full bed mesh has a variance greater than 1 layer height, caution must be taken when using adaptive bed meshes and attempting print moves outside of the meshed area.</p>
+<h2 id="surface-scans">Surface Scans<a class="headerlink" href="#surface-scans" title="Permanent link">&para;</a></h2>
+<p>Some probes, such as the <a href="Eddy_Probe.html">Eddy Current Probe</a>, are capable of "scanning" the surface of the bed. That is, these probes can sample a mesh without lifting the tool between samples. To activate scanning mode, the <code>METHOD=scan</code> or <code>METHOD=rapid_scan</code> probe parameter should be passed in the <code>BED_MESH_CALIBRATE</code> gcode command.</p>
+<h3 id="scan-height">Scan Height<a class="headerlink" href="#scan-height" title="Permanent link">&para;</a></h3>
+<p>The scan height is set by the <code>horizontal_move_z</code> option in <code>[bed_mesh]</code>. In addition it can be supplied with the <code>BED_MESH_CALIBRATE</code> gcode command via the <code>HORIZONTAL_MOVE_Z</code> parameter.</p>
+<p>The scan height must be sufficiently low to avoid scanning errors. Typically a height of 2mm (ie: <code>HORIZONTAL_MOVE_Z=2</code>) should work well, presuming that the probe is mounted correctly.</p>
+<p>It should be noted that if the probe is more than 4mm above the surface then the results will be invalid. Thus, scanning is not possible on beds with severe surface deviation or beds with extreme tilt that hasn't been corrected.</p>
+<h3 id="rapid-continuous-scanning">Rapid (Continuous) Scanning<a class="headerlink" href="#rapid-continuous-scanning" title="Permanent link">&para;</a></h3>
+<p>When performing a <code>rapid_scan</code> one should keep in mind that the results will have some amount of error. This error should be low enough to be useful on large print areas with reasonably thick layer heights. Some probes may be more prone to error than others.</p>
+<p>It is not recommended that rapid mode be used to scan a "dense" mesh. Some of the error introduced during a rapid scan may be gaussian noise from the sensor, and a dense mesh will reflect this noise (ie: there will be peaks and valleys).</p>
+<p>Bed Mesh will attempt to optimize the travel path to provide the best possible result based on the configuration. This includes avoiding faulty regions when collecting samples and "overshooting" the mesh when changing direction. This overshoot improves sampling at the edges of a mesh, however it requires that the mesh be configured in a way that allows the tool to travel outside of the mesh.</p>
+<div class="highlight"><pre><span></span><code>[bed_mesh]
+speed: 120
+horizontal_move_z: 5
+mesh_min: 35, 6
+mesh_max: 240, 198
+probe_count: 5
+scan_overshoot: 8
+</code></pre></div>
+
+<ul>
+<li><code>scan_overshoot</code> <em>Default Value: 0 (disabled)</em> The maximum amount of travel (in mm) available outside of the mesh. For rectangular beds this applies to travel on the X axis, and for round beds it applies to the entire radius. The tool must be able to travel the amount specified outside of the mesh. This value is used to optimize the travel path when performing a "rapid scan". The minimum value that may be specified is 1. The default is no overshoot.</li>
+</ul>
+<p>If no scan overshoot is configured then travel path optimization will not be applied to changes in direction.</p>
+<h2 id="g">床網 G程式碼<a class="headerlink" href="#g" title="Permanent link">&para;</a></h2>
+<h3 id="_10">校準<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<p><code>BED_MESH_CALIBRATE PROFILE=&lt;name&gt; METHOD=[manual | automatic | scan | rapid_scan] \ [&lt;probe_parameter&gt;=&lt;value&gt;] [&lt;mesh_parameter&gt;=&lt;value&gt;] [ADAPTIVE=[0|1] \ [ADAPTIVE_MARGIN=&lt;value&gt;]</code> <em>Default Profile: default</em> <em>Default Method: automatic if a probe is detected, otherwise manual</em>  <em>Default Adaptive: 0</em>  <em>Default Adaptive Margin: 0</em></p>
+<p>啟動床網校準的探測程式。</p>
+<p>The mesh will be immediately ready to use when the command completes and saved into a profile specified by the <code>PROFILE</code> parameter, or <code>default</code> if unspecified. The <code>METHOD</code> parameter takes one of the following values:</p>
+<ul>
+<li><code>METHOD=manual</code>: enables manual probing using the nozzle and the paper test</li>
+<li><code>METHOD=automatic</code>: Automatic (standard) probing. This is the default.</li>
+<li><code>METHOD=scan</code>: Enables surface scanning. The tool will pause over each position to collect a sample.</li>
+<li><code>METHOD=rapid_scan</code>: Enables continuous surface scanning.</li>
+</ul>
+<p>XY positions are automatically adjusted to include the X and/or Y offsets when a probing method other than <code>manual</code> is selected.</p>
+<p>可以通過指定網格參數來修改探測區域。以下參數可用：</p>
+<ul>
+<li>矩形列印床（笛卡爾 Cartesian）：<ul>
+<li><code>MESH_MIN</code></li>
+<li><code>MESH_MAX</code></li>
+<li><code>PROBE_COUNT</code></li>
+</ul>
+</li>
+<li>圓形列印床（三角洲 delta）：<ul>
+<li><code>MESH_RADIUS</code></li>
+<li><code>MESH_ORIGIN</code></li>
+<li><code>ROUND_PROBE_COUNT</code></li>
+</ul>
+</li>
+<li>全部列印床：<ul>
+<li><code>MESH_PPS</code></li>
+<li><code>ALGORITHM</code></li>
+<li><code>ADAPTIVE</code></li>
+<li><code>ADAPTIVE_MARGIN</code></li>
+</ul>
+</li>
+</ul>
+<p>有關在網格中使用的配置參數詳見配置文件。</p>
+<h3 id="_11">配置<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<p><code>BED_MESH_PROFILE SAVE=&lt;名稱&gt; LOAD=&lt;名稱&gt; REMOVE=&lt;名稱&gt;</code></p>
+<p>在執行 BED_MESH_CALIBRATE 后，可以將目前網格狀態儲存到一個命名的配置中。這樣不需要重新探測列印床就可以載入一個網格。在使用<code>BED_MESH_PROFILE SAVE=&lt;名稱&gt;</code>儲存了一個配置檔案后，可以執行<code>SAVE_CONFIG</code> G程式碼將配置寫入 printer.cfg。</p>
+<p>可以通過執行 <code>BED_MESH_PROFILE LOAD=&lt;名稱&gt;</code> 來載入配置。</p>
+<p>It should be noted that each time a BED_MESH_CALIBRATE occurs, the current state is automatically saved to the <em>default</em> profile. The <em>default</em> profile can be removed as follows:</p>
+<p><code>BED_MESH_PROFILE REMOVE=default</code></p>
+<p>任何其他儲存的配置也可以用相同的方式刪除，用你想刪除的配置名稱替換<em>default</em>。</p>
+<h4 id="loading-the-default-profile">Loading the default profile<a class="headerlink" href="#loading-the-default-profile" title="Permanent link">&para;</a></h4>
+<p>Previous versions of <code>bed_mesh</code> always loaded the profile named <em>default</em> on startup if it was present. This behavior has been removed in favor of allowing the user to determine when a profile is loaded. If a user wishes to load the <code>default</code> profile it is recommended to add <code>BED_MESH_PROFILE LOAD=default</code> to either their <code>START_PRINT</code> macro or their slicer's "Start G-Code" configuration, whichever is applicable.</p>
+<p>Note that this is not required if a new mesh is generated with <code>BED_MESH_CALIBRATE</code> in the <code>START_PRINT</code> macro or the slicer's "Start G-Code" and may produce unexpected results, especially with adaptive meshing.</p>
+<p>Alternatively the old behavior of loading a profile at startup can be restored with a <code>[delayed_gcode]</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[delayed_gcode bed_mesh_init]</span>
+<span class="na">initial_duration</span><span class="o">:</span><span class="w"> </span><span class="s">.01</span>
+<span class="na">gcode</span><span class="o">:</span>
+<span class="w">  </span><span class="na">BED_MESH_PROFILE LOAD</span><span class="o">=</span><span class="s">default</span>
+</code></pre></div>
+
+<h3 id="_12">輸出<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<p><code>BED_MESH_OUTPUT PGP=[0 | 1]</code></p>
+<p>將目前網格狀態輸出到終端。請注意，輸出的是網格本身</p>
+<p>PGP 參數是「列印產生的點」的簡寫。如果設定了<code>PGP=1</code>，產生的探測點將輸出到終端：</p>
+<div class="highlight"><pre><span></span><code>// bed_mesh: generated points
+// Index | Tool Adjusted | Probe
+// 0 | (11.0, 1.0) | (35.0, 6.0)
+// 1 | (62.2, 1.0) | (86.2, 6.0)
+// 2 | (113.5, 1.0) | (137.5, 6.0)
+// 3 | (164.8, 1.0) | (188.8, 6.0)
+// 4 | (216.0, 1.0) | (240.0, 6.0)
+// 5 | (216.0, 97.0) | (240.0, 102.0)
+// 6 | (164.8, 97.0) | (188.8, 102.0)
+// 7 | (113.5, 97.0) | (137.5, 102.0)
+// 8 | (62.2, 97.0) | (86.2, 102.0)
+// 9 | (11.0, 97.0) | (35.0, 102.0)
+// 10 | (11.0, 193.0) | (35.0, 198.0)
+// 11 | (62.2, 193.0) | (86.2, 198.0)
+// 12 | (113.5, 193.0) | (137.5, 198.0)
+// 13 | (164.8, 193.0) | (188.8, 198.0)
+// 14 | (216.0, 193.0) | (240.0, 198.0)
+</code></pre></div>
+
+<p>"Tool Adjusted"（工具調整）點指每個點的噴嘴位置，"Probe"（探針）點指探頭位置。請注意，手動探測時"Probe"（探針）點時將同時指工具和噴嘴位置。</p>
+<h3 id="_13">清除網格狀態<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h3>
+<p><code>BED_MESH_CLEAR</code></p>
+<p>此 gcode 可用於清除內部網格狀態。</p>
+<h3 id="xy">應用X/Y偏移量<a class="headerlink" href="#xy" title="Permanent link">&para;</a></h3>
+<p><code>BED_MESH_OFFSET [X=&lt;value&gt;] [Y=&lt;value&gt;] [ZFADE=&lt;value&gt;]</code></p>
+<p>This is useful for printers with multiple independent extruders, as an offset is necessary to produce correct Z adjustment after a tool change. Offsets should be specified relative to the primary extruder. That is, a positive X offset should be specified if the secondary extruder is mounted to the right of the primary extruder, a positive Y offset should be specified if the secondary extruder is mounted "behind" the primary extruder, and a positive ZFADE offset should be specified if the secondary extruder's nozzle is above the primary extruder's.</p>
+<p>Note that a ZFADE offset does <em>NOT</em> directly apply additional adjustment. It is intended to compensate for a <code>gcode offset</code> when <a href="#mesh-fade">mesh fade</a> is enabled. For example, if a secondary extruder is higher than the primary and needs a negative gcode offset, ie: <code>SET_GCODE_OFFSET Z=-.2</code>, it can be accounted for in <code>bed_mesh</code> with <code>BED_MESH_OFFSET ZFADE=.2</code>.</p>
+<h2 id="bed-mesh-webhooks-apis">Bed Mesh Webhooks APIs<a class="headerlink" href="#bed-mesh-webhooks-apis" title="Permanent link">&para;</a></h2>
+<h3 id="dumping-mesh-data">Dumping mesh data<a class="headerlink" href="#dumping-mesh-data" title="Permanent link">&para;</a></h3>
+<p><code>{"id": 123, "method": "bed_mesh/dump_mesh"}</code></p>
+<p>Dumps the configuration and state for the current mesh and all saved profiles.</p>
+<p>The <code>dump_mesh</code> endpoint takes one optional parameter, <code>mesh_args</code>. This parameter must be an object, where the keys and values are parameters available to <a href="#bed_mesh_calibrate">BED_MESH_CALIBRATE</a>. This will update the mesh configuration and probe points using the supplied parameters prior to returning the result. It is recommended to omit mesh parameters unless it is desired to visualize the probe points and/or travel path before performing <code>BED_MESH_CALIBRATE</code>.</p>
+<h2 id="visualization-and-analysis">Visualization and analysis<a class="headerlink" href="#visualization-and-analysis" title="Permanent link">&para;</a></h2>
+<p>Most users will likely find that the visualizers included with applications such as Mainsail, Fluidd, and Octoprint are sufficient for basic analysis. However, Klipper's <code>scripts</code> folder contains the <code>graph_mesh.py</code> script that may be used to perform additional visualizations and more detailed analysis, particularly useful for debugging hardware or the results produced by <code>bed_mesh</code>:</p>
+<div class="highlight"><pre><span></span><code>usage: graph_mesh.py [-h] {list,plot,analyze,dump} ...
+
+Graph Bed Mesh Data
+
+positional arguments:
+  {list,plot,analyze,dump}
+    list                List available plot types
+    plot                Plot a specified type
+    analyze             Perform analysis on mesh data
+    dump                Dump API response to json file
+
+options:
+  -h, --help            show this help message and exit
+</code></pre></div>
+
+<h3 id="pre-requisites">Pre-requisites<a class="headerlink" href="#pre-requisites" title="Permanent link">&para;</a></h3>
+<p>Like most graphing tools provided by Klipper, <code>graph_mesh.py</code> requires the <code>matplotlib</code> and <code>numpy</code> python dependencies. In addition, connecting to Klipper via Moonraker's websocket requires the <code>websockets</code> python dependency. While all visualizations can be output to an <code>svg</code> file, most of the visualizations offered by <code>graph_mesh.py</code> are better viewed in live preview mode on a desktop class PC. For example, the 3D visualizations may be rotated and zoomed in preview mode, and the path visualizations can optionally be animated in preview mode.</p>
+<h3 id="plotting-mesh-data">Plotting Mesh data<a class="headerlink" href="#plotting-mesh-data" title="Permanent link">&para;</a></h3>
+<p>The <code>graph_mesh.py</code> tool can plot several types of visualizations. Available types can be shown by running <code>graph_mesh.py list</code>:</p>
+<div class="highlight"><pre><span></span><code>graph_mesh.py list
+points    Plot original generated points
+path      Plot probe travel path
+rapid     Plot rapid scan travel path
+probedz   Plot probed Z values
+meshz     Plot mesh Z values
+overlay   Plots the current probed mesh overlaid with a profile
+delta     Plots the delta between current probed mesh and a profile
+</code></pre></div>
+
+<p>Several options are available when plotting visualizations:</p>
+<div class="highlight"><pre><span></span><code>usage: graph_mesh.py plot [-h] [-a] [-s] [-p PROFILE_NAME] [-o OUTPUT] &lt;plot type&gt; &lt;input&gt;
+
+positional arguments:
+  &lt;plot type&gt;           Type of data to graph
+  &lt;input&gt;               Path/url to Klipper Socket or path to json file
+
+options:
+  -h, --help            show this help message and exit
+  -a, --animate         Animate paths in live preview
+  -s, --scale-plot      Use axis limits reported by Klipper to scale plot X/Y
+  -p PROFILE_NAME, --profile-name PROFILE_NAME
+                        Optional name of a profile to plot for &#39;probedz&#39;
+  -o OUTPUT, --output OUTPUT
+                        Output file path
+</code></pre></div>
+
+<p>Below is a description of each argument:</p>
+<ul>
+<li><code>plot type</code>: A required positional argument designating the type of visualization to generate. Must be one of the types output by the <code>graph_mesh.py list</code> command.</li>
+<li><code>input</code>: A required positional argument containing a path or url to the input source. This must be one of the following:<ul>
+<li>A path to Klipper's Unix Domain Socket</li>
+<li>A url to an instance of Moonraker</li>
+<li>A path to a json file produced by <code>graph_mesh.py dump &lt;input&gt;</code></li>
+</ul>
+</li>
+<li><code>-a</code>: Optional animation for the <code>path</code> and <code>rapid</code> visualization types. Animations only apply to a live preview.</li>
+<li><code>-s</code>: Optionally scales a plot using the <code>axis_minimum</code> and <code>axis_maximum</code> values reported by Klipper's <code>toolhead</code> object when the dump file was generated.</li>
+<li><code>-p</code>: A profile name that may be specified when generating the <code>probedz</code> 3D mesh visualization. When generating an <code>overlay</code> or <code>delta</code> visualization this argument must be provided.</li>
+<li><code>-o</code>: An optional file path indicating that the script should save the visualization to this location rather than run in preview mode. Images are saved in <code>svg</code> format.</li>
+</ul>
+<p>For example, to plot an animated rapid path, connecting via Klipper's unix socket:</p>
+<div class="highlight"><pre><span></span><code>graph_mesh.py plot -a rapid ~/printer_data/comms/klippy.sock
+</code></pre></div>
+
+<p>Or to plot a 3d visualization of the mesh, connecting via Moonraker:</p>
+<div class="highlight"><pre><span></span><code>graph_mesh.py plot meshz http://my-printer.local
+</code></pre></div>
+
+<h3 id="bed-mesh-analysis">Bed Mesh Analysis<a class="headerlink" href="#bed-mesh-analysis" title="Permanent link">&para;</a></h3>
+<p>The <code>graph_mesh.py</code> tool may also be used to perform an analysis on the data provided by the <a href="#dumping-mesh-data">bed_mesh/dump_mesh</a> API:</p>
+<div class="highlight"><pre><span></span><code>graph_mesh.py analyze &lt;input&gt;
+</code></pre></div>
+
+<p>As with the <code>plot</code> command, the <code>&lt;input&gt;</code> must be a path to Klipper's unix socket, a URL to an instance of Moonraker, or a path to a json file generated by the dump command.</p>
+<p>To begin, the analysis will perform various checks on the points and probe paths generated by <code>bed_mesh</code> at the time of the dump. This includes the following:</p>
+<ul>
+<li>The number of probe points generated, without any additions</li>
+<li>The number of probe points generated including any points generated as the result faulty regions and/or a configured zero reference position.</li>
+<li>The number of probe points generated when performing a rapid scan.</li>
+<li>The total number of moves generated for a rapid scan.</li>
+<li>A validation that the probe points generated for a rapid scan are identical to the probe points generated for a standard probing procedure.</li>
+<li>A "backtracking" check for both the standard probe path and a rapid scan path. Backtracking can be defined as moving to the same position more than once during the probing procedure. Backtracking should never occur during a standard probe. Faulty regions <em>can</em> result in backtracking during a rapid scan in an attempt to avoid entering a faulty region when approaching or leaving a probe location, however should never occur otherwise.</li>
+</ul>
+<p>Next each probed mesh present in the dump will by analyzed, beginning with the mesh loaded at the time of the dump (if present) and followed by any saved profiles. The following data is extracted:</p>
+<ul>
+<li>Mesh shape (Min X,Y, Max X,Y Probe Count)</li>
+<li>Mesh Z range, (Minimum Z, Maximum Z)</li>
+<li>Mean Z value in the mesh</li>
+<li>Standard Deviation of the Z values in the Mesh</li>
+</ul>
+<p>In addition to the above, a delta analysis is performed between meshes with the same shape, reporting the following:</p>
+<ul>
+<li>The range of the delta between to meshes (Minimum and Maximum)</li>
+<li>The mean delta</li>
+<li>Standard Deviation of the delta</li>
+<li>The absolute maximum difference</li>
+<li>The absolute mean</li>
+</ul>
+<h3 id="save-mesh-data-to-a-file">Save mesh data to a file<a class="headerlink" href="#save-mesh-data-to-a-file" title="Permanent link">&para;</a></h3>
+<p>The <code>dump</code> command may be used to save the response to a file which can be shared for analysis when troubleshooting:</p>
+<div class="highlight"><pre><span></span><code>graph_mesh.py dump -o &lt;output file name&gt; &lt;input&gt;
+</code></pre></div>
+
+<p>The <code>&lt;input&gt;</code> should be a path to Klipper's unix socket or a URL to an instance of Moonraker. The <code>-o</code> option may be used to specify the path to the output file. If omitted, the file will be saved in the working directory, with a file name in the following format:</p>
+<p><code>klipper-bedmesh-{year}{month}{day}{hour}{minute}{second}.json</code></p>
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="Manual_Level.html" class="md-footer__link md-footer__link--prev" aria-label="上一頁: 手動調平" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一頁
+              </span>
+              手動調平
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="Endstop_Phase.html" class="md-footer__link md-footer__link--next" aria-label="下一頁: 限位相位" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一頁
+              </span>
+              限位相位
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.top", "search.suggest", "search.highlight", "search.share"], "translations": {"clipboard.copy": "\u62f7\u8c9d", "clipboard.copied": "\u5df2\u62f7\u8c9d", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u5c0b", "search.result.placeholder": "\u9375\u5165\u4ee5\u958b\u59cb\u6aa2\u7d22", "search.result.none": "\u6c92\u6709\u627e\u5230\u7b26\u5408\u689d\u4ef6\u7684\u7d50\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u689d\u4ef6\u7684\u7d50\u679c", "search.result.other": "# \u500b\u7b26\u5408\u689d\u4ef6\u7684\u7d50\u679c", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "assets/javascripts/workers/search.0bbba5b5.min.js"}</script>
+    
+    
+      <script src="assets/javascripts/bundle.e1a181d9.min.js"></script>
+      
+    
+  </body>
+</html>
