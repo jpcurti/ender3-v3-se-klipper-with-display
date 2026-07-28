@@ -1,9 +1,9 @@
 # Support for reading frequency samples from ldc1612
 #
-# Copyright (C) 2020-2024  Kevin O'Connor <kevin@koconnor.net>
+# Copyright (C) 2020-2026  Kevin O'Connor <kevin@koconnor.net>
 #
 # This file may be distributed under the terms of the GNU GPLv3 license.
-import logging
+import logging, math
 from . import bus, bulk_sensor
 
 MIN_MSG_TIME = 0.100
@@ -76,9 +76,10 @@ class DriveCurrentCalibrate:
 class LDC1612:
     def __init__(self, config, calibration=None):
         self.printer = config.get_printer()
+        self.name = config.get_name().split()[-1]
         self.calibration = calibration
         self.dccal = DriveCurrentCalibrate(config, self)
-        self.data_rate = 250
+        self.data_rate = 400
         # Setup mcu sensor_ldc1612 bulk query code
         self.i2c = bus.MCU_I2C_from_config(config,
                                            default_addr=LDC1612_ADDR,
@@ -87,13 +88,20 @@ class LDC1612:
         self._sensor_errors = {}
         self.oid = oid = mcu.create_oid()
         self.query_ldc1612_cmd = None
-        self.ldc1612_setup_home_cmd = self.query_ldc1612_home_state_cmd = None
         self.clock_freq = config.getint("frequency", DEFAULT_LDC1612_FREQ,
                                         2000000, 40000000)
-        # Coil frequency divider, assume 12MHz is BTT Eddy
-        # BTT Eddy's coil frequency is > 1/4 of reference clock
-        self.sensor_div = 1 if self.clock_freq != DEFAULT_LDC1612_FREQ else 2
+        # Determine sensor divider (want 4*max_hz < clock_ref)
+        max_hz = config.getfloat("max_sensor_hz", 5000000., 3000000., 20000000.)
+        self.sensor_div = int(math.ceil(4. * max_hz / self.clock_freq))
         self.freq_conv = float(self.clock_freq * self.sensor_div) / (1<<28)
+        if self.calibration is not None:
+            cal_freqs, cal_zpos = self.calibration.get_calibration()
+            if cal_freqs and max(cal_freqs) > max_hz:
+                pconfig = self.printer.lookup_object("configfile")
+                pconfig.runtime_warning(
+                    "ldc1612 %s: Should set 'max_sensor_hz' to at least %d"
+                    % (self.name, math.ceil(max(cal_freqs))))
+        # Configure intb and mcu object
         if config.get('intb_pin', None) is not None:
             ppins = config.get_printer().lookup_object("pins")
             pin_params = ppins.lookup_pin(config.get('intb_pin'))
@@ -116,28 +124,28 @@ class LDC1612:
         self.batch_bulk = bulk_sensor.BatchBulkHelper(
             self.printer, self._process_batch,
             self._start_measurements, self._finish_measurements, BATCH_UPDATES)
-        self.name = config.get_name().split()[-1]
         hdr = ('time', 'frequency', 'z')
         self.batch_bulk.add_mux_endpoint("ldc1612/dump_ldc1612", "sensor",
                                          self.name, {'header': hdr})
+    def setup_trigger_analog(self, trigger_analog_oid):
+        self.mcu.add_config_cmd(
+            "ldc1612_attach_trigger_analog oid=%d trigger_analog_oid=%d"
+            % (self.oid, trigger_analog_oid), is_init=True)
     def _build_config(self):
         cmdqueue = self.i2c.get_command_queue()
         self.query_ldc1612_cmd = self.mcu.lookup_command(
             "query_ldc1612 oid=%c rest_ticks=%u", cq=cmdqueue)
         self.ffreader.setup_query_command("query_status_ldc1612 oid=%c",
                                           oid=self.oid, cq=cmdqueue)
-        self.ldc1612_setup_home_cmd = self.mcu.lookup_command(
-            "ldc1612_setup_home oid=%c clock=%u threshold=%u"
-            " trsync_oid=%c trigger_reason=%c error_reason=%c", cq=cmdqueue)
-        self.query_ldc1612_home_state_cmd = self.mcu.lookup_query_command(
-            "query_ldc1612_home_state oid=%c",
-            "ldc1612_home_state oid=%c homing=%c trigger_clock=%u",
-            oid=self.oid, cq=cmdqueue)
         errors = self.mcu.get_enumerations().get("ldc1612_error:", {})
         self._sensor_errors = {v: k for k, v in errors.items()}
     def get_mcu(self):
         return self.i2c.get_mcu()
+    def get_samples_per_second(self):
+        return self.data_rate
     def read_reg(self, reg):
+        if self.mcu.is_fileoutput():
+            return 0
         params = self.i2c.i2c_read([reg], 2)
         response = bytearray(params['response'])
         return (response[0] << 8) | response[1]
@@ -146,22 +154,12 @@ class LDC1612:
                            minclock=minclock)
     def add_client(self, cb):
         self.batch_bulk.add_client(cb)
-    # Homing
-    def setup_home(self, print_time, trigger_freq,
-                   trsync_oid, hit_reason, err_reason):
-        clock = self.mcu.print_time_to_clock(print_time)
-        tfreq = int(trigger_freq / self.freq_conv + 0.5)
-        self.ldc1612_setup_home_cmd.send(
-            [self.oid, clock, tfreq, trsync_oid, hit_reason, err_reason])
-    def clear_home(self):
-        self.ldc1612_setup_home_cmd.send([self.oid, 0, 0, 0, 0, 0])
-        if self.mcu.is_fileoutput():
-            return 0.
-        params = self.query_ldc1612_home_state_cmd.send([self.oid])
-        tclock = self.mcu.clock32_to_clock64(params['trigger_clock'])
-        return self.mcu.clock_to_print_time(tclock)
     def lookup_sensor_error(self, error):
         return self._sensor_errors.get(error, "Unknown ldc1612 error")
+    def convert_raw_to_frequency(self, raw_value):
+        return raw_value * self.freq_conv
+    def convert_frequency_to_raw(self, freq):
+        return int(freq / self.freq_conv + 0.5)
     # Measurement decoding
     def _convert_samples(self, samples):
         freq_conv = self.freq_conv
@@ -200,7 +198,8 @@ class LDC1612:
         # noise or wrong signal as a correctly initialized device
         manuf_id = self.read_reg(REG_MANUFACTURER_ID)
         dev_id = self.read_reg(REG_DEVICE_ID)
-        if manuf_id != LDC1612_MANUF_ID or dev_id != LDC1612_DEV_ID:
+        if ((manuf_id != LDC1612_MANUF_ID or dev_id != LDC1612_DEV_ID)
+            and not self.mcu.is_fileoutput()):
             raise self.printer.command_error(
                 "Invalid ldc1612 id (got %x,%x vs %x,%x).\n"
                 "This is generally indicative of connection problems\n"
