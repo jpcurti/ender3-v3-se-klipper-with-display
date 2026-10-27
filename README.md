@@ -1,9 +1,10 @@
 <!-- markdownlint-disable-next-line MD041 -->
+
 [![Build Firmware](https://github.com/Atomique13/ender3-v3-se-klipper-with-display/actions/workflows/build-firmware.yaml/badge.svg)](https://github.com/Atomique13/ender3-v3-se-klipper-with-display/actions/workflows/build-firmware.yaml)
 
 # Modified Klipper for the Creality Ender 3 V3 SE with display support
 
-This is a modified [Klipper](https://www.klipper3d.org/) that supports the original **Creality E3V3SE (Ender 3 V3 SE)** display by combining [E4ST2W3ST serial bridge](https://github.com/Klipper3d/klipper/commit/6469418d73be6743a7130b50fdb5a57d311435ca) with the [ender 3 v3 se display interface](https://github.com/jpcurti/E3V3SE_display_klipper) to make it possible to use the printers display cable without any hardware modification. This repository is forked from [0XD34Ds klipper config](https://github.com/0xD34D/klipper_ender3_v3_se), but its commits can be applied separately from any other configuration.
+This is a modified [Klipper](https://www.klipper3d.org/) that supports the original **Creality E3V3SE (Ender 3 V3 SE)** display by combining [E4ST2W3ST serial bridge](https://github.com/Klipper3d/klipper/commit/6469418d73be6743a7130b50fdb5a57d311435ca) with the [printer's display interface](https://github.com/jpcurti/E3V3SE_display_klipper) to make it possible to use the printer's display without any hardware modification. This repository is forked from [0XD34Ds klipper config](https://github.com/0xD34D/klipper_ender3_v3_se), but its commits can be applied separately from any other configuration.
 
 ![Demonstration image](e3v3se_docs/images/display_e3v3se_klipper.gif)
 
@@ -11,9 +12,12 @@ This is a modified [Klipper](https://www.klipper3d.org/) that supports the origi
 
 ### Using pre-built binaries
 
-Copy the `.bin` file from a [release](https://github.com/jpcurti/ender3-v3-se-klipper-with-display/releases) to a SD card and flash it into your printer as you would do when installing klipper. **Note: remember to rename the file to a different filename as the last flashed binary, otherwise the printer won't recognize it as a new file and won't update.**
+Copy the `.bin` file from a [release](https://github.com/jpcurti/ender3-v3-se-klipper-with-display/releases) to a FAT32-formatted SD card and flash it into your printer as you would when installing Klipper. 
 
-### By cloning the project and building it from source
+> [!IMPORTANT]
+> Remember to rename the file differently to the last flashed binary, otherwise the printer won't recognize it as a new file and won't update.
+
+### Building from source
 
 Clone the project, navigate to the repository directory and configure your build with `make menuconfig`:
 
@@ -23,14 +27,27 @@ cd ender3-v3-se-klipper-with-display
 make menuconfig
 ```
 
-In the configuration menu, enable the serial bridge for **USART2** and the klipper parameters for the Ender 3 v3 se:
+In the configuration menu, enable the serial bridge for **USART2** and the klipper parameters for the Ender 3 V3 SE:
 ![Demonstration image](e3v3se_docs/images/klipper_make_menuconfig_serial_bridge.png)
 
-After that, build your own binaries with `make`, copy the `klipper.bin` from the output folder to a SD card and flash as you would do with klipper.
+> [!IMPORTANT]
+> If your printer uses the new motherboard revision, you will need to make these changes:
+> 
+> Processor model: `STM32F401`
+>
+> Bootloader offset: `64KB bootloader`
+>
+> You can check your motherboard revision by navigating to `Control > Info` on the printer's display. If it says `CR4NS200320C14` under `Hardware version`, you have the new motherboard revision.
+
+After that, build your own binaries with `make`, copy the `klipper.bin` from the `out` folder to a SD card and flash as you would do with Klipper.
+
+> [!IMPORTANT]
+> If your printer uses the new motherboard revision, you will need to place the firmware file in a folder named `STM32F4_UPDATE` instead of in the root folder.
+
 
 ## Configuration
 
-A section called `[e3v3se_display]` need to be added to your `printer.cfg` to enable the display. Besides that, you can set a custom language and logging (defaulted as english and false, respectively), like:
+A section called `[e3v3se_display]` needs to be added to your `printer.cfg` file to enable the display. You can set a custom language and logging (defaulted to `english` and `false`, respectively), for example:
 
 ```yaml
 [e3v3se_display]
@@ -40,16 +57,18 @@ logging: True
 
 ### Custom macros
 
-The new 'Misc' menu list a set of custom macros that can be defined on your `printer.cfg`.
-You can use this to call macros defined on Klipper using your screen directly, e.g.: Load/Unload filament, calibrate Z offset, calibrate bed mesh, clean nozzle, etc.
+The new 'Misc' menu lists a set of custom macros that can be defined in your `printer.cfg` file.
 
-On your `printer.cfg` you can define the macros using a new config section `[e3v3se_display MACRO%I]` where `%i` is the macro number (This should be unique per macro). The following properties are available:
+You can use this to call macros defined in Klipper using your screen directly, e.g.: load/unload filament, calibrate Z offset, calibrate bed mesh, clean nozzle, etc.
 
-| Property | Data type | Required | Description                                                      |
-|----------|-----------|----------|------------------------------------------------------------------|
-| label    | Text      | Yes      | Text to be displayed on the screen                               |
-| icon     | Integer   | No       | Internal firmware icon. Defaults to 14 (file icon)               |
-| gcode    | Text      | Yes      | GCODE to be run when the item is selected.  i.e `G28` for homing |
+In your `printer.cfg` file you can define the macros using a new config section `[e3v3se_display MACRO%I]` where `%i` is the macro number (this should be unique per macro). The following properties are available:
+
+
+| Property | Data type | Required | Description                                                     |
+| -------- | --------- | -------- | --------------------------------------------------------------- |
+| label    | Text      | Yes      | Text to be displayed on the screen                              |
+| icon     | Integer   | No       | Internal firmware icon. Defaults to 14 (file icon)              |
+| gcode    | Text      | Yes      | GCODE to be run when the item is selected.  i.e`G28` for homing |
 
 Some examples for your inspiration:
 
@@ -80,11 +99,12 @@ label: Clean nozzle
 icon: 9
 ```
 
-To browse icon library, call the macro `ENDER_SE_DISPLAY_ICON_FINDER` on your Klipper console and use the screen to navigate through the icons.
+To browse the icon library, call the `ENDER_SE_DISPLAY_ICON_FINDER` macro using your Klipper console and use the screen to navigate through the icons.
 
 ## Supported features
 
 The currently supported features are:
+
 
 | Feature                | Status  |
 | ---------------------- | ------- |
@@ -117,9 +137,7 @@ Features that are not available are shown as a pop-up:
 ## Related projects and credits
 
 - This repository is heavily based on the [DWIN_T5UIC1_LCD](https://github.com/odwdinc/DWIN_T5UIC1_LCD) repository for the E3V2 display and makes use of most of the available classes and methods implemented there, with the necessary modifications for the E3V3SE display. All credits goes to the [author of the DWIN_T5UIC1_LCD project](https://github.com/odwdinc) for making the version which this repository is based on.
-
 - This repository includes a proposed change proposed by [E4ST2W3ST](https://github.com/Klipper3d/klipper/commit/6469418d73be6743a7130b50fdb5a57d311435ca) to enable the MCU to act as a serial bridge between USB and the display serial port. Without his work, this project wouldn't exist.
-
 - This repository is forked and makes use of an already configuration for the ender 3 v3 se made by [0XD34D](https://github.com/0xD34D/klipper_ender3_v3_se), where a lot of different improvements were made.
 
 ## FAQ
@@ -129,6 +147,7 @@ Features that are not available are shown as a pop-up:
 Please check if you are renaming the binaries between flashes as mentioned in the section [Using pre-built binaries](#using-pre-built-binaries)
 
 <!-- markdownlint-disable-next-line MD026 -->
+
 ### After installing this project my display went crazy!
 
 Check if you installed the **E3V3SE display firmware 1.0.6** as mentioned in section [Important](#important)
