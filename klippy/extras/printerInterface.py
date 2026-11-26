@@ -173,6 +173,7 @@ class PrinterData:
         self.status = None
 
     def handle_ready(self):
+        self.load_presets()
         self.update_variable()
         self.get_additional_values()
  
@@ -503,8 +504,34 @@ class PrinterData:
         self.sendGCode('M82') # change to absolute positioning
         self.sendGCode('G1 {}{} F{}'.format(axis, str(pos), str(feedrate))) # move the specified axis at the set feedrate
 
+    PRESET_KEYS = ("hotend_temp", "bed_temp", "fan_speed")
+
+    def load_presets(self):
+        # Restore preheat presets saved by save_settings() (needs [save_variables])
+        sv = self.printer.lookup_object("save_variables", None)
+        if sv is None:
+            return
+        allv = getattr(sv, "allVariables", {}) or {}
+        for p in self.material_preset:
+            for k in self.PRESET_KEYS:
+                key = "display_%s_%s" % (p.name.lower(), k)
+                if key in allv:
+                    try:
+                        setattr(p, k, int(allv[key]))
+                    except (TypeError, ValueError):
+                        pass
+
     def save_settings(self):
-        self.sendGCode('SAVE_CONFIG') # save the current configuration changes
+        # Store the preheat presets with SAVE_VARIABLE. SAVE_CONFIG (used before)
+        # restarted Klipper and did not save the presets at all.
+        if self.printer.lookup_object("save_variables", None) is None:
+            self.gcode.respond_info("Add [save_variables] to printer.cfg to keep display presets")
+            return False
+        for p in self.material_preset:
+            for k in self.PRESET_KEYS:
+                self.sendGCode("SAVE_VARIABLE VARIABLE=display_%s_%s VALUE=%d"
+                               % (p.name.lower(), k, int(getattr(p, k))))
+        return True
 
     def setExtTemp(self, target, toolnum=0):
         self.sendGCode("M104 T%s S%s" % (toolnum, str(target)))
