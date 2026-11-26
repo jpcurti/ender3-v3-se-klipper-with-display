@@ -38,6 +38,16 @@ language: portuguese
 logging: True
 ```
 
+### Saving preheat presets
+
+The preheat presets edited on the screen (Control > Temperature > Preheat settings > Save) are stored with
+Klipper's `SAVE_VARIABLE`, so they survive restarts without a `SAVE_CONFIG`. Add a `[save_variables]` section:
+
+```yaml
+[save_variables]
+filename: ~/printer_data/config/variables.cfg
+```
+
 ### Custom macros
 
 The new 'Misc' menu list a set of custom macros that can be defined on your `printer.cfg`.
