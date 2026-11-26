@@ -416,6 +416,13 @@ class PRTouchZOffsetWrapper:
         self._move([probe_x, probe_y, self.cfg.bed_max_err + 1.], self.cfg.g29_xy_speed)
         probe_gcmd = self.obj.gcode.create_gcode_command("PROBE", "PROBE", {'SAMPLES': '2'})
         z_probe = probe.run_single_probe(self.obj.probe, probe_gcmd)
+        # run_single_probe() returns a read-only ProbeResult whose bed_z already has the
+        # probe z_offset subtracted. The z_offset maths below expects the raw toolhead
+        # trigger position (test_x/test_y/test_z), as returned before the probe refactor.
+        if hasattr(z_probe, 'test_z'):
+            z_probe = [z_probe.test_x, z_probe.test_y, z_probe.test_z]
+        else:
+            z_probe = list(z_probe)
         self.pnt_msg('Probe at sensor: %.3f' % z_probe[2])
 
         nozzle_z_offset = self.probe_z_offset(x, y)
