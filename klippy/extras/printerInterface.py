@@ -143,7 +143,7 @@ class PrinterData:
 
     material_preset = [
         material_preset_t("PLA", 200, 60),
-        material_preset_t("ABS", 210, 100),
+        material_preset_t("TPU", 230, 50),
     ]
     subdirs = []
     subdirIndex = 0
@@ -200,9 +200,17 @@ class PrinterData:
                 )
                 self.X_MAX_POS = int(volume[0])
                 self.Y_MAX_POS = int(volume[1])
+                self.Z_MAX_POS = int(volume[2])
 
         configfile = self.printer.lookup_object(
             "configfile").get_status(self.reactor.monotonic())
+        # Screen temperature limits follow printer.cfg (5C below Klipper's max_temp cutoff)
+        settings = configfile.get("settings", {})
+        try:
+            self.MAX_E_TEMP = int(float(settings["extruder"]["max_temp"])) - 5
+            self.BED_MAX_TARGET = int(float(settings["heater_bed"]["max_temp"])) - 5
+        except (KeyError, TypeError, ValueError):
+            pass
         if "config" in configfile:
             if "bltouch" in configfile["config"]:
                 if "z_offset" in configfile["config"]["bltouch"]:
@@ -402,14 +410,14 @@ class PrinterData:
         self.setBedTemp(0)
 
     def zero_fan_speeds(self):
-        pass
+        self.sendGCode("M107")
 
     def preheat(self, profile):
         if profile == "PLA":
             self.preHeat(
                 self.material_preset[0].bed_temp, self.material_preset[0].hotend_temp
             )
-        elif profile == "ABS":
+        elif profile in ("TPU", "ABS"):
             self.preHeat(
                 self.material_preset[1].bed_temp, self.material_preset[1].hotend_temp
             )
@@ -485,7 +493,7 @@ class PrinterData:
 
     def probe_calibrate(self):
         self.sendGCode('G28') # home the printer
-        self.sendGCode('PRTOUCH_PROBE_OFFSET CLEAR_NOZZLE=0 APPLY_Z_ADJUST=1') # use the prtouch to find the z offset and apply it
+        self.sendGCode('PRTOUCH_PROBE_ZOFFSET CLEAR_NOZZLE=0 APPLY_Z_ADJUST=1') # use the prtouch to find the z offset and apply it
 
     def resume_job(self):
         self.sendGCode('RESUME') # resume the print
@@ -500,7 +508,7 @@ class PrinterData:
         self.sendGCode('M220 S' + str(value)) # set the feedrate through the M220 gcode command
 
     def moveAbsolute(self, axis, pos, feedrate):
-        self.sendGCode('M82') # change to absolute positioning
+        self.sendGCode('G90') # change to absolute positioning
         self.sendGCode('G1 {}{} F{}'.format(axis, str(pos), str(feedrate))) # move the specified axis at the set feedrate
 
     def save_settings(self):

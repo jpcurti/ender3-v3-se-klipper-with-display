@@ -662,8 +662,15 @@ class E3v3seDisplay:
         except Exception as e: 
             self.error("Error registering M117: %s" % e)
 
-    def handle_mcu_error(self):
-        self.show_popup(self.printer.get_state_message())
+    def handle_mcu_error(self, *args):
+        # klippy:notify_mcu_error passes (msg, details); get_state_message() returns (msg, category)
+        try:
+            msg = self.printer.get_state_message()
+            if isinstance(msg, tuple):
+                msg = msg[0]
+            self.show_popup(msg)
+        except Exception as e:
+            self.error("Could not show MCU error popup: %s" % e)
 
     def cmd_M117(self, gcmd):
         msg = gcmd.get_raw_command_parameters() or None
@@ -854,7 +861,7 @@ class E3v3seDisplay:
                     if self.index_misc == self.MROWS:
                         self.Draw_Back_First()
                     else:
-                        self.Draw_CustomMacroItem(index, self.MROWS)
+                        self.Draw_CustomMacroItem(index, 0)
                 else:
                     self.Move_Highlight(-1, self.select_misc.now + self.MROWS - self.index_misc)# Move highlight
         elif encoder_state == self.ENCODER_DIFF_ENTER:
@@ -983,8 +990,7 @@ class E3v3seDisplay:
                 self.pd.preheat("TPU")
 
             elif self.select_prepare.now == self.PREPARE_CASE_COOL:  # Cool
-                if self.pd.HAS_FAN:
-                    self.pd.zero_fan_speeds()
+                self.pd.zero_fan_speeds()
                 self.pd.disable_all_heaters()
 
             elif self.select_prepare.now == self.PREPARE_CASE_LANG:  # Toggle Language
@@ -1377,7 +1383,10 @@ class E3v3seDisplay:
         elif encoder_state == self.ENCODER_DIFF_FAST_CCW:
             self.pd.HMI_ValueStruct.print_speed -= 10
 
-        elif encoder_state == self.ENCODER_DIFF_ENTER:
+        # Same limits as Marlin: 10..999 %
+        self.pd.HMI_ValueStruct.print_speed = _MIN(999, _MAX(10, self.pd.HMI_ValueStruct.print_speed))
+
+        if encoder_state == self.ENCODER_DIFF_ENTER:
             self.checkkey = self.Tune
             self.encoderRate = True
             self.pd.set_feedrate(self.pd.HMI_ValueStruct.print_speed)
@@ -2081,7 +2090,6 @@ class E3v3seDisplay:
             elif self.select_TPU.now == self.PREHEAT_CASE_TEMP:  # Nozzle temperature
                 self.checkkey = self.ETemp
                 self.pd.HMI_ValueStruct.E_Temp = self.pd.material_preset[1].hotend_temp
-                print(self.pd.HMI_ValueStruct.E_Temp)
                 self.lcd.draw_int_value(
                     True,
                     True,
@@ -3258,16 +3266,16 @@ class E3v3seDisplay:
             self.color_background_black,
             50,
             215,
-            "github.com/jpcurti/",
+            "jpcurti/ender3-v3-se-",
         )
         self.lcd.draw_string(
             False,
             self.lcd.font_8x8,
             self.color_white,
             self.color_background_black,
-            30,
+            50,
             230,
-            "ender3-v3-se-klipper-with-display",
+            "klipper-with-display",
         )
         self.Draw_Status_Area()
 
@@ -4214,13 +4222,13 @@ class E3v3seDisplay:
             self.lcd.draw_icon(True, self.ICON, self.icon_leveling_selected, 126, 178)
             self.lcd.draw_string_centered(
                 False,
-                self.lcd.font_8x8,
+                self.lcd.font_8x16,
                 self.color_white,
                 self.color_background_black,
-                self.MENU_CHR_W,
-                0,
-                175,
-                247,
+                8,
+                16,
+                176,
+                256,
                 "Misc"
             )
             self.lcd.draw_rectangle(0, self.color_white, 126, 178, 226, 292)
@@ -4228,13 +4236,13 @@ class E3v3seDisplay:
             self.lcd.draw_icon(True, self.ICON, self.icon_leveling, 126, 178)
             self.lcd.draw_string_centered(
                 False,
-                self.lcd.font_8x8,
+                self.lcd.font_8x16,
                 self.color_white,
                 self.color_background_black,
-                self.MENU_CHR_W,
-                0,
-                175,
-                247,
+                8,
+                16,
+                176,
+                256,
                 "Misc"
             )
 
@@ -4369,7 +4377,6 @@ class E3v3seDisplay:
         update = self.pd.update_variable()
         if self.last_status != self.pd.status:
             self.last_status = self.pd.status
-            print(self.pd.status)
             if self.pd.status == "printing":
                 self.Goto_PrintProcess()
             elif self.pd.status in ["operational", "complete", "standby", "cancelled"]:
