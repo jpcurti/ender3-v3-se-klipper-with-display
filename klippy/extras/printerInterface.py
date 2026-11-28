@@ -170,6 +170,7 @@ class PrinterData:
         self.reactor = self.printer.get_reactor()
         self._logging = config.getboolean("logging", False)
         self.gcode = self.printer.lookup_object("gcode")
+        self._gcode_queue = []
         self.status = None
 
     def handle_ready(self):
@@ -481,7 +482,28 @@ class PrinterData:
 
 
     def sendGCode(self, Gcode):
-        self.gcode._process_commands([Gcode])
+        # Queue the command and run it from a reactor callback via
+        # gcode.run_script(), which takes the G-code mutex (same as Klipper's
+        # own display menu). Calling _process_commands() directly bypassed the
+        # mutex, so e.g. CANCEL_PRINT from the screen ran concurrently with
+        # virtual_sdcard and the print kept going ("Macro CANCEL_PRINT called
+        # recursively" on a second press).
+        if not Gcode:
+            return
+        self._gcode_queue.append(Gcode)
+        if len(self._gcode_queue) == 1:
+            self.reactor.register_callback(self._dispatch_gcode)
+
+    def _dispatch_gcode(self, eventtime):
+        while self._gcode_queue:
+            script = self._gcode_queue[0]
+            try:
+                self.gcode.run_script(script)
+            except self.gcode.error:
+                pass  # already reported to the console as "!! ..."
+            except Exception:
+                logging.exception("e3v3se display: G-code failed: %s", script)
+            self._gcode_queue.pop(0)
 
     def probe_calibrate(self):
         self.sendGCode('G28') # home the printer
