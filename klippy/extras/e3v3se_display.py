@@ -866,7 +866,7 @@ class E3v3seDisplay:
                 self.log("Running custom macro '%s'" % macro["id"])
 
                 try:
-                    self.gcode.run_script_from_command(macro["gcode"])
+                    self.pd.sendGCode(macro["gcode"])
                 except Exception as e:
                     self.error("Error running custom macro '%s': %s" % (macro["id"], e))
                     self.gcode.respond_info("Error running custom macro '%s': %s" % (macro["id"], e))
@@ -1202,7 +1202,7 @@ class E3v3seDisplay:
                 self.error(f"Ignoring move '{current_pos - step}' as it is lower than Z limit '{min_z}'!")
                 error = True
             else:
-                self.gcode.run_script_from_command(f"TESTZ Z=-{step}")
+                self.pd.sendGCode(f"TESTZ Z=-{step}")
             update = True
         elif encoder_state == self.ENCODER_DIFF_CCW or encoder_state == self.ENCODER_DIFF_FAST_CCW:
             step = self.MANUAL_PROBE_STEPS[self.manual_probe_step_index]
@@ -1210,13 +1210,13 @@ class E3v3seDisplay:
                 self.error(f"Ignoring move '{current_pos + step}' as it is greater than Z limit '{max_z}'!")
                 error = True
             else:
-                self.gcode.run_script_from_command(f"TESTZ Z={step}")
+                self.pd.sendGCode(f"TESTZ Z={step}")
             update = True
         elif encoder_state == self.ENCODER_DIFF_ENTER:
             self.manual_probe_step_index = (self.manual_probe_step_index + 1) % len(self.MANUAL_PROBE_STEPS)
             update = True
         elif encoder_state == self.ENCODER_DIFF_LONG_ENTER:
-            self.gcode.run_script_from_command("ACCEPT")
+            self.pd.sendGCode("ACCEPT")
             self.Goto_MainMenu()
 
         if update:
